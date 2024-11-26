@@ -1,0 +1,43 @@
+/* styles.css */
+
+/* Сброс отступов и размеров */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Установка высоты и ширины для html и body */
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Стиль для фонового канваса шейдера */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Размещение за основным содержимым */
+  overflow: hidden;
+  background-color: transparent; /* Сделаем фон прозрачным */
+}
+
+/* Стиль для содержимого главной страницы */
+.home-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  /* Удаляем фиксированный цвет текста */
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}

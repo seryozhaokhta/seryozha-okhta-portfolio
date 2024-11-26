@@ -1,0 +1,17 @@
+{
+  "intro": {
+    "preName": "My name is",
+    "name": "Seryozha Okhta",
+    "namePrefix": "Seryozha ",
+    "nameO": "O",
+    "nameSuffix": "khta",
+    "postName": "; I specialize in interface development and design. My portfolio includes work with data visualization, web applications, and educational content.",
+    "welcome": "I use Vue.js, Node.js, Three.js, and am passionate about 3D and interactive graphics."
+  },
+  "header": {
+    "title": "My Shader Project"
+  },
+  "footer": {
+    "text": "© 2024 My Shader Project. All rights reserved."
+  }
+}
