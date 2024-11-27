@@ -22,14 +22,16 @@ const switchLocale = (newLocale) => {
 button {
   margin-right: 10px;
   padding: 5px 10px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--button-background);
+  color: var(--button-text-color);
   border: none;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--button-hover-background, rgba(0, 0, 0, 0.2));
+  color: var(--button-hover-text-color, #ffffff);
 }
 </style>

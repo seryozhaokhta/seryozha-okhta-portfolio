@@ -61,10 +61,9 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-family: Helvetica, sans-serif;
+  color: var(--text-color);
   text-align: left;
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3); */
   padding: 20px 40px;
   border-radius: 10px;
   z-index: 10;
@@ -76,7 +75,7 @@ onMounted(() => {
 }
 
 .intro-name {
-  color: var(--intro-text-color-default);
+  /* Убрали явное определение цвета, т.к. оно задаётся через родителя */
   font-size: 1.9rem;
   margin-bottom: 1rem;
   line-height: 1.25;

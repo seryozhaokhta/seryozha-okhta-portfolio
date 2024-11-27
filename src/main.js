@@ -1,11 +1,16 @@
 // src/main.js
 
 import { createApp } from 'vue';
-import './styles.css';
 import App from './App.vue';
-import i18n from './i18n'; // Импортируем i18n
+import i18n from './i18n';
+
+// Импортируем разделённые CSS файлы в правильном порядке
+import './styles/variables.css'; // CSS-переменные должны быть первыми
+import './styles/base.css';
+import './styles/typography.css';
+import './styles/header.css';
+import './styles/footer.css';
 
 createApp(App)
-    .use(i18n) // Используем i18n
+    .use(i18n)
     .mount('#app');
-

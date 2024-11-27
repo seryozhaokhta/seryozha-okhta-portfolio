@@ -1,0 +1,33 @@
+/* src/styles/typography.css */
+
+/* Общие стили для типографики */
+body {
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  transition: color 0.5s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: var(--text-color);
+  transition: color 0.5s;
+}
+
+/* Специфические стили */
+.intro-name {
+  color: var(--text-color);
+  font-size: 1.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  font-weight: normal;
+}
+
+.intro-description {
+  margin-top: 10px;
+  font-size: 18px;
+}

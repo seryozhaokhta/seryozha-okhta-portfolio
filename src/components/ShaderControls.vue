@@ -26,6 +26,6 @@ useShaderGUI(props.params, props.onUpdate, guiContainer);
   position: fixed;
   top: 60px;
   right: 0;
-  z-index: 20; /* Поверх шейдера и других элементов */
+  z-index: 20;
 }
 </style>
