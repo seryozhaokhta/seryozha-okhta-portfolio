@@ -3,7 +3,15 @@
 <template>
   <div class="shader-title">
     <h1 class="intro-name">
-      {{ t("intro.preName") }}
+      <!-- preName с плавным переходом -->
+      <span
+        :class="{ faded: isHover }"
+        style="transition: opacity 0.5s, filter 0.5s"
+      >
+        {{ t("intro.preName") }}
+      </span>
+
+      <!-- name-part без класса faded и без transition -->
       <span
         @mouseenter="hoverName(true)"
         @mouseleave="hoverName(false)"
@@ -17,10 +25,24 @@
             <span class="accent" ref="accent">́</span>
           </span>
           <span class="name-suffix">{{ t("intro.nameSuffix") }}</span>
-        </span> </span
-      >{{ t("intro.postName") }}
+        </span>
+      </span>
+
+      <!-- postName с плавным переходом -->
+      <span
+        :class="{ faded: isHover }"
+        style="transition: opacity 0.5s, filter 0.5s"
+      >
+        {{ t("intro.postName") }}
+      </span>
     </h1>
-    <p class="intro-description">
+
+    <!-- intro-description с плавным переходом -->
+    <p
+      :class="{ faded: isHover }"
+      style="transition: opacity 0.5s, filter 0.5s"
+      class="intro-description"
+    >
       {{ t("intro.welcome") }}
     </p>
   </div>
@@ -34,22 +56,23 @@ import { gsap } from "gsap";
 // Используем i18n для локализации
 const { t } = useI18n();
 
-const isHovered = ref(false);
-
-// Ссылки на элементы
+// Ссылка на элемент ударения
 const accent = ref(null);
 
+// Состояние наведения
+const isHover = ref(false);
+
+// Функция для анимации ударения при наведении
 const hoverName = (hover) => {
-  isHovered.value = hover;
+  isHover.value = hover;
   if (hover) {
-    gsap.to(".name-part", { duration: 0.5, skewX: -10 });
     gsap.to(accent.value, { duration: 0.5, opacity: 1, y: -5 });
   } else {
-    gsap.to(".name-part", { duration: 0.5, skewX: 0 });
     gsap.to(accent.value, { duration: 0.5, opacity: 0, y: 0 });
   }
 };
 
+// Устанавливаем начальное состояние ударения
 onMounted(() => {
   gsap.set(accent.value, { opacity: 0 });
 });
@@ -63,7 +86,6 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   color: var(--text-color);
   text-align: left;
-  /* background: rgba(0, 0, 0, 0.3); */
   padding: 20px 40px;
   border-radius: 10px;
   z-index: 10;
@@ -75,11 +97,16 @@ onMounted(() => {
 }
 
 .intro-name {
-  /* Убрали явное определение цвета, т.к. оно задаётся через родителя */
+  /* Цвет задаётся через родителя */
   font-size: 1.9rem;
   margin-bottom: 1rem;
   line-height: 1.25;
+  flex-wrap: wrap;
   font-weight: normal;
+}
+
+.intro-name > span:not(.name-part) {
+  margin-right: 0.22em; /* Добавляет промежуток между элементами */
 }
 
 .intro-description {
@@ -89,10 +116,9 @@ onMounted(() => {
 
 .name-part {
   display: inline-block;
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
+  position: relative;
   cursor: pointer;
+  line-height: 1;
 }
 
 .name {
@@ -113,5 +139,11 @@ onMounted(() => {
   font-size: 0.8em;
   pointer-events: none;
   opacity: 0;
+}
+
+.faded {
+  opacity: 0.35;
+  filter: blur(4px);
+  transition: opacity 0.5s, filter 0.5s;
 }
 </style>
