@@ -12,3 +12,7 @@
   left: 0;
   transition: background-color 0.5s, color 0.5s;
 }
+
+footer p {
+  mix-blend-mode: exclusion;
+}

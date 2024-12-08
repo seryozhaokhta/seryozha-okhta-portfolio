@@ -5,7 +5,6 @@
   padding: 20px;
   background-color: var(--header-background);
   backdrop-filter: blur(10px);
-  color: var(--text-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,6 +20,7 @@
   font-size: 24px;
   color: var(--text-color);
   transition: color 0.5s;
+  mix-blend-mode: exclusion;
 }
 
 .header-controls {

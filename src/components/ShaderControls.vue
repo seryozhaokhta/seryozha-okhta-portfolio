@@ -21,11 +21,4 @@ const guiContainer = ref(null);
 useShaderGUI(props.params, props.onUpdate, guiContainer);
 </script>
 
-<style scoped>
-.gui-container {
-  position: fixed;
-  top: 60px;
-  right: 0;
-  z-index: 20;
-}
-</style>
+<style scoped></style>

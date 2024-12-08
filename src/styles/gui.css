@@ -1,0 +1,121 @@
+/* src/styles/gui.css */
+
+/* Основной стиль панели dat.GUI */
+.dg.main {
+  background-color: var(
+    --gui-background
+  ) !important; /* Используем отдельную переменную для GUI */
+  color: var(--gui-text-color) !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 0.9; /* Полупрозрачность */
+  font-family: Helvetica, sans-serif !important;
+  transition: background-color 0.5s, color 0.5s, opacity 0.5s;
+  backdrop-filter: blur(0px);
+}
+
+/* Стиль названий свойств */
+.dg .property-name {
+  color: var(--gui-text-color) !important;
+  transition: color 0.5s;
+}
+
+/* Стиль полей ввода */
+.dg input[type="text"] {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ) !important; /* Полупрозрачный фон */
+  color: var(--gui-text-color) !important;
+  border: 1px solid var(--gui-text-color) !important;
+  border-radius: 3px;
+  padding: 2px 4px;
+  width: 60px;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+}
+
+/* Стиль слайдеров */
+.dg .slider {
+  background-color: var(--gui-slider-bg) !important;
+  height: 8px;
+  border-radius: 4px;
+  transition: background-color 0.5s;
+}
+
+/* Стиль заполненной части слайдера */
+.dg .slider .slider-fg {
+  background-color: var(--gui-slider-fg) !important;
+  height: 100%;
+  border-radius: 4px;
+  transition: background-color 0.5s;
+}
+
+/* Стиль кнопок (например, кнопка "Рандомизировать c") */
+.dg .cr.function .button {
+  background-color: var(--button-background) !important;
+  color: var(--button-text-color) !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стиль кнопок при наведении */
+.dg .cr.function .button:hover {
+  background-color: var(
+    --button-hover-background,
+    rgba(0, 0, 0, 0.2)
+  ) !important;
+  color: var(--button-hover-text-color, #ffffff) !important;
+}
+
+/* Стиль кнопки закрытия панели */
+.dg .close-button {
+  background-color: var(--gui-background) !important;
+  color: var(--gui-text-color) !important;
+  cursor: pointer !important;
+  padding: 5px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+}
+
+/* Стиль текста кнопки закрытия при наведении */
+.dg .close-button:hover {
+  background-color: var(
+    --button-hover-background,
+    rgba(0, 0, 0, 0.2)
+  ) !important;
+  color: var(--button-hover-text-color, #ffffff) !important;
+}
+
+/* Удаление лишних отступов */
+.dg ul {
+  padding: 10px !important;
+}
+
+/* Стилизация контейнера GUI */
+.gui-container {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  z-index: 20;
+  backdrop-filter: blur(2px);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/* Добавление стилей для li:not(.folder) */
+.dg li:not(.folder) {
+  background-color: var(--gui-list-item-bg) !important;
+  backdrop-filter: blur(5px);
+  transition: background-color 0.5s, backdrop-filter 0.5s;
+}
+
+/* Добавление стилей при наведении на li:not(.folder) */
+.dg li:not(.folder):hover {
+  background-color: var(--gui-list-item-bg-hover) !important;
+}

@@ -1,4 +1,4 @@
-  // src/assets/shader.frag
+// src/assets/shader.frag
 
   #ifdef GL_ES
   precision mediump float;

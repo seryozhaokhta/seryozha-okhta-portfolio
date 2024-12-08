@@ -1,44 +1,31 @@
-<!-- src/App.vue -->
+<!-- App.vue -->
 
 <template>
-  <div class="home-content">
-    <AppHeader />
-    <ShaderEffect :params="params" :c="c" :theme="themeValue" />
-    <ShaderTitle />
-    <ShaderControls :params="params" :onUpdate="handleUpdate" />
-    <AppFooter />
+  <div class="app">
+    <header class="app__header">
+      <AppHeader />
+    </header>
+    <main class="app__main-content">
+      <router-view />
+    </main>
+    <footer class="app__footer">
+      <AppFooter />
+    </footer>
   </div>
 </template>
 
 <script setup>
-import { computed, watch } from "vue";
-import { useShader } from "./composables/useShader";
-import { useTheme } from "./composables/useTheme";
 import AppHeader from "./components/AppHeader.vue";
-import ShaderEffect from "./components/ShaderEffect.vue";
-import ShaderControls from "./components/ShaderControls.vue";
-import ShaderTitle from "./views/ShaderTitle.vue";
 import AppFooter from "./components/AppFooter.vue";
+import { computed, watch } from "vue";
+import { useTheme } from "@/composables/useTheme";
 
-// Используем composables
-const { params, c, randomizeC, updateParam } = useShader();
-const { themeValue, toggleTheme } = useTheme();
+const { themeValue } = useTheme();
 
-// Функция для обновления параметров шейдера
-const handleUpdate = (key, value) => {
-  if (key === "randomizeC") {
-    randomizeC();
-  } else {
-    updateParam(key, value);
-  }
-};
-
-// Вычисляем класс темы на основе themeValue
 const themeClass = computed(() => {
   return themeValue.value >= 0.5 ? "dark-theme" : "";
 });
 
-// Watcher для применения класса темы к <body>
 watch(
   themeClass,
   (newClass) => {
@@ -54,19 +41,15 @@ watch(
 </script>
 
 <style>
-.home-content {
-  position: relative;
+.app {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Распределение пространства между хедером и футером */
-  align-items: center;
-  min-height: 100vh; /* Минимальная высота 100% высоты окна */
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  z-index: 1; /* Поверх шейдера */
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.5s, color 0.5s;
+  min-height: 100vh; /* Делает футер "прижатым" к низу при мало контента */
+}
+
+.app__main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -8,7 +8,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useTheme } from "../composables/useTheme";
+import { useTheme } from "@/composables/useTheme";
 
 // Получаем themeValue и toggleTheme из composable
 const { themeValue, toggleTheme } = useTheme();

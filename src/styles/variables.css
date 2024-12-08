@@ -9,15 +9,31 @@
   --button-text-color: #ffffff;
   --button-hover-background: rgba(255, 255, 255, 0.2);
   --button-hover-text-color: #000000;
+
+  /* Новые переменные для GUI */
+  --gui-background: rgba(0, 0, 0, 0.2);
+  --gui-text-color: #ffffff;
+  --gui-slider-bg: rgba(255, 255, 255, 0.3);
+  --gui-slider-fg: rgba(0, 0, 0, 0.2);
+  --gui-list-item-bg: rgba(0, 0, 0, 0.3);
+  --gui-list-item-bg-hover: rgba(0, 0, 0, 0.4); /* Фон при наведении */
 }
 
 body.dark-theme {
   --background-color: #ffffff;
-  --text-color: #000000;
+  --text-color: #ffffff;
   --header-background: rgba(255, 255, 255, 0.2);
   --footer-background: rgba(255, 255, 255, 0.2);
   --button-background: rgba(0, 0, 0, 0.1);
   --button-text-color: #000000;
   --button-hover-background: rgba(0, 0, 0, 0.2);
   --button-hover-text-color: #ffffff;
+
+  /* Обновляем переменные для GUI в темной теме */
+  --gui-background: rgba(255, 255, 255, 0.2);
+  --gui-text-color: #000000;
+  --gui-slider-bg: rgba(0, 0, 0, 0.3);
+  --gui-slider-fg: rgba(255, 255, 255, 0.2);
+  --gui-list-item-bg: rgba(255, 255, 255, 0.3);
+  --gui-list-item-bg-hover: rgba(255, 255, 255, 0.4); /* Фон при наведении */
 }

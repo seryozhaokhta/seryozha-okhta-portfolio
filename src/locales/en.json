@@ -9,9 +9,15 @@
     "welcome": "I use Vue.js, Node.js, Three.js, and am passionate about 3D and interactive graphics."
   },
   "header": {
-    "title": "My Shader Project"
+    "title": "My Shader Project",
+    "cv": "CV"
   },
   "footer": {
-    "text": "© 2024 My Shader Project. All rights reserved."
+    "email": "seryozha.okhta@gmail.com",
+    "copy": "Copied!"
+  },
+  "cv": {
+    "title": "Curriculum Vitae",
+    "description": "Here is my CV page content."
   }
 }

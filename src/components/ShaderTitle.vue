@@ -1,4 +1,4 @@
-<!-- src/views/ShaderTitle.vue -->
+<!-- src/components/ShaderTitle.vue -->
 
 <template>
   <div class="shader-title">
@@ -89,15 +89,15 @@ onMounted(() => {
   padding: 20px 40px;
   border-radius: 10px;
   z-index: 10;
+  mix-blend-mode: exclusion;
 }
 
 .shader-title h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 28px;
 }
 
 .intro-name {
-  /* Цвет задаётся через родителя */
   font-size: 1.9rem;
   margin-bottom: 1rem;
   line-height: 1.25;
@@ -135,7 +135,7 @@ onMounted(() => {
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translateX(calc(-50% + 12px)) translateY(-100%);
+  transform: translateX(calc(-50% + 6px)) translateY(-100%);
   font-size: 0.8em;
   pointer-events: none;
   opacity: 0;
