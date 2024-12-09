@@ -1,0 +1,74 @@
+{
+  "designer": {
+    "title": "Curriculum Vitae - Designer",
+    "description": "As a designer, I specialize in creating intuitive interfaces and engaging user experiences.",
+    "skills": {
+      "title": "Skills",
+      "tools": ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Sketch"],
+      "designPrinciples": [
+        "User-Centered Design",
+        "Responsive Design",
+        "Accessibility",
+        "Color Theory",
+        "Typography"
+      ]
+    },
+    "experienceTitle": "Experience",
+    "experience": [
+      {
+        "company": "Creative Agency XYZ",
+        "role": "UI/UX Designer",
+        "years": "2018-2020",
+        "description": "Designed responsive interfaces, conducted user research, and improved user flows."
+      },
+      {
+        "company": "Freelance Projects",
+        "role": "Graphic Designer",
+        "years": "2020-Present",
+        "description": "Created branding materials, visual identities, and marketing collateral for clients."
+      }
+    ]
+  },
+  "developer": {
+    "title": "Curriculum Vitae - Developer",
+    "description": "As a developer, I specialize in front-end technologies and creating interactive web applications.",
+    "skills": {
+      "title": "Skills",
+      "languages": ["JavaScript", "TypeScript", "HTML", "CSS"],
+      "frameworks": ["Vue.js", "Node.js", "Three.js"],
+      "other": ["REST APIs", "Webpack/Vite", "Git/GitHub"]
+    },
+    "experienceTitle": "Experience",
+    "experience": [
+      {
+        "company": "Tech Start-Up ABC",
+        "role": "Front-End Developer",
+        "years": "2017-2019",
+        "description": "Implemented complex UI components, improved application performance, and integrated RESTful APIs."
+      },
+      {
+        "company": "Freelance",
+        "role": "Full-Stack Developer",
+        "years": "2019-Present",
+        "description": "Developed custom web solutions, integrated 3D interactive graphics, and maintained scalable codebases."
+      }
+    ]
+  },
+  "cvPage": {
+    "toggle": {
+      "designer": "Designer",
+      "developer": "Developer"
+    },
+    "title": {
+      "designer": "Curriculum Vitae - Designer",
+      "developer": "Curriculum Vitae - Developer"
+    }
+  },
+  "skillsLabels": {
+    "tools": "Tools:",
+    "designPrinciples": "Design Principles:",
+    "languages": "Languages:",
+    "frameworks": "Frameworks:",
+    "other": "Other:"
+  }
+}

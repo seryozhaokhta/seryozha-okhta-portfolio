@@ -40,16 +40,37 @@ watch(
 );
 </script>
 
-<style>
+<style scoped>
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Делает футер "прижатым" к низу при мало контента */
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.app__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--header-background);
+  padding: 20px;
 }
 
 .app__main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--footer-background);
+  padding: 20px;
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
 }
 </style>

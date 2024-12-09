@@ -29,15 +29,10 @@ const handleUpdate = (key, value) => {
 
 <style scoped>
 .home {
-  /* Базовый стиль для домашней страницы */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.5s, color 0.5s;
+  text-align: center;
 }
 </style>

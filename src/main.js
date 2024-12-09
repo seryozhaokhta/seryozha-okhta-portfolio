@@ -9,8 +9,6 @@ import router from './router'; // Импортируем маршрутизат�
 import './styles/variables.css'; // CSS-переменные должны быть первыми
 import './styles/base.css';
 import './styles/typography.css';
-import './styles/header.css';
-import './styles/footer.css';
 import './styles/gui.css'; // Импортируем кастомные стили для dat.GUI
 
 createApp(App)

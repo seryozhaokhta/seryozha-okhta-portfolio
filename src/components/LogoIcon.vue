@@ -1,7 +1,7 @@
-<!-- src/components/LogoIcon.vue -->
-
+<!-- LogoIcon.vue -->
 <template>
   <svg
+    class="logo-icon"
     width="24"
     height="24"
     viewBox="0 0 24 24"
@@ -23,6 +23,8 @@
 .logo-icon {
   width: 40px;
   height: 40px;
-  /* Цвет иконки наследуется из родителя */
+  color: var(
+    --logo-icon-color
+  ); /* Здесь задаём цвет иконки через currentColor */
 }
 </style>

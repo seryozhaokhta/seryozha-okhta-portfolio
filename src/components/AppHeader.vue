@@ -26,30 +26,31 @@ import CVButton from "./CVButton.vue";
 <style scoped>
 .app-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
+  /* Опционально:
   background-color: var(--header-background);
-  backdrop-filter: blur(10px);
   padding: 20px;
-  transition: background-color 0.5s, color 0.5s;
-}
-
-.app-header__title {
-  margin: 0 0 0 10px;
-  font-size: 24px;
-  color: var(--text-color);
-  transition: color 0.5s;
-  mix-blend-mode: exclusion;
+  */
 }
 
 .app-header__left-section {
   display: flex;
   align-items: center;
+  gap: 10px;
+  color: var(--logo-icon-color);
+}
+
+.app-header__title {
+  margin: 0;
+  font-size: 24px;
+  color: var(--text-color);
 }
 
 .app-header__controls {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin-left: auto;
 }
 </style>

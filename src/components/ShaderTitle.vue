@@ -2,10 +2,10 @@
 
 <template>
   <div class="shader-title">
-    <h1 class="intro-name">
+    <h1 class="shader-title__intro-name">
       <!-- preName с плавным переходом -->
       <span
-        :class="{ faded: isHover }"
+        :class="{ 'shader-title__faded': isHover }"
         style="transition: opacity 0.5s, filter 0.5s"
       >
         {{ t("intro.preName") }}
@@ -15,22 +15,26 @@
       <span
         @mouseenter="hoverName(true)"
         @mouseleave="hoverName(false)"
-        class="name-part"
+        class="shader-title__name-part"
       >
         <!-- Используем части имени из локализации -->
-        <span class="name">
-          <span class="name-prefix">{{ t("intro.namePrefix") }}</span>
-          <span class="name-letter-o" ref="nameLetterO">
+        <span class="shader-title__name">
+          <span class="shader-title__name-prefix">{{
+            t("intro.namePrefix")
+          }}</span>
+          <span class="shader-title__name-letter-o" ref="nameLetterO">
             {{ t("intro.nameO") }}
-            <span class="accent" ref="accent">́</span>
+            <span class="shader-title__accent" ref="accent">́</span>
           </span>
-          <span class="name-suffix">{{ t("intro.nameSuffix") }}</span>
+          <span class="shader-title__name-suffix">{{
+            t("intro.nameSuffix")
+          }}</span>
         </span>
       </span>
 
       <!-- postName с плавным переходом -->
       <span
-        :class="{ faded: isHover }"
+        :class="{ 'shader-title__faded': isHover }"
         style="transition: opacity 0.5s, filter 0.5s"
       >
         {{ t("intro.postName") }}
@@ -39,9 +43,9 @@
 
     <!-- intro-description с плавным переходом -->
     <p
-      :class="{ faded: isHover }"
+      :class="{ 'shader-title__faded': isHover }"
       style="transition: opacity 0.5s, filter 0.5s"
-      class="intro-description"
+      class="shader-title__intro-description"
     >
       {{ t("intro.welcome") }}
     </p>
@@ -53,16 +57,11 @@ import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { gsap } from "gsap";
 
-// Используем i18n для локализации
 const { t } = useI18n();
 
-// Ссылка на элемент ударения
 const accent = ref(null);
-
-// Состояние наведения
 const isHover = ref(false);
 
-// Функция для анимации ударения при наведении
 const hoverName = (hover) => {
   isHover.value = hover;
   if (hover) {
@@ -72,7 +71,6 @@ const hoverName = (hover) => {
   }
 };
 
-// Устанавливаем начальное состояние ударения
 onMounted(() => {
   gsap.set(accent.value, { opacity: 0 });
 });
@@ -97,41 +95,42 @@ onMounted(() => {
   font-size: 28px;
 }
 
-.intro-name {
+.shader-title__intro-name {
   font-size: 1.9rem;
   margin-bottom: 1rem;
   line-height: 1.25;
-  flex-wrap: wrap;
   font-weight: normal;
+  flex-wrap: wrap;
 }
 
-.intro-name > span:not(.name-part) {
+/* Сохраняем логику margin-right, заменяя селектор по необходимости */
+.shader-title__intro-name > span:not(.shader-title__name-part) {
   margin-right: 0.22em; /* Добавляет промежуток между элементами */
 }
 
-.intro-description {
+.shader-title__intro-description {
   margin-top: 10px;
   font-size: 18px;
 }
 
-.name-part {
+.shader-title__name-part {
   display: inline-block;
   position: relative;
   cursor: pointer;
   line-height: 1;
 }
 
-.name {
+.shader-title__name {
   position: relative;
   display: inline-block;
 }
 
-.name-letter-o {
+.shader-title__name-letter-o {
   position: relative;
   display: inline-block;
 }
 
-.accent {
+.shader-title__accent {
   position: absolute;
   left: 50%;
   top: 0;
@@ -141,7 +140,7 @@ onMounted(() => {
   opacity: 0;
 }
 
-.faded {
+.shader-title__faded {
   opacity: 0.35;
   filter: blur(4px);
   transition: opacity 0.5s, filter 0.5s;

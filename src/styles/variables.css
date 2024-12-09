@@ -17,6 +17,10 @@
   --gui-slider-fg: rgba(0, 0, 0, 0.2);
   --gui-list-item-bg: rgba(0, 0, 0, 0.3);
   --gui-list-item-bg-hover: rgba(0, 0, 0, 0.4); /* Фон при наведении */
+
+  /* Новые переменные для цвета иконок в дневной теме */
+  --icon-color: #ffffff; /* Иконки в дневном режиме - чёрные */
+  --logo-icon-color: #ffffff; /* Логотип тоже чёрный днём */
 }
 
 body.dark-theme {
@@ -36,4 +40,8 @@ body.dark-theme {
   --gui-slider-fg: rgba(255, 255, 255, 0.2);
   --gui-list-item-bg: rgba(255, 255, 255, 0.3);
   --gui-list-item-bg-hover: rgba(255, 255, 255, 0.4); /* Фон при наведении */
+
+  /* Для ночной темы иконки становятся белыми */
+  --icon-color: #000000;
+  --logo-icon-color: #000000;
 }
