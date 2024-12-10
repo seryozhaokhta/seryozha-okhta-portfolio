@@ -2,15 +2,15 @@
 
 <template>
   <div>
-    <button @click="switchLocale('en')">EN</button>
-    <button @click="switchLocale('ru')">RU</button>
+    <button @click="switchLocale('en')">{{ t("header.language.en") }}</button>
+    <button @click="switchLocale('ru')">{{ t("header.language.ru") }}</button>
   </div>
 </template>
 
 <script setup>
 import { useI18n } from "vue-i18n";
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const switchLocale = (newLocale) => {
   locale.value = newLocale;

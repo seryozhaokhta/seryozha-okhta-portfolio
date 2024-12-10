@@ -10,7 +10,15 @@
   },
   "header": {
     "title": "My Shader Project",
-    "cv": "CV"
+    "cv": "CV",
+    "theme": {
+      "day": "Day",
+      "night": "Night"
+    },
+    "language": {
+      "en": "English",
+      "ru": "Russian"
+    }
   },
   "footer": {
     "email": "seryozha.okhta@gmail.com",

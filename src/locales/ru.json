@@ -10,7 +10,15 @@
   },
   "header": {
     "title": "Мой Проект Шейдера",
-    "cv": "Резюме"
+    "cv": "Резюме",
+    "theme": {
+      "day": "День",
+      "night": "Ночь"
+    },
+    "language": {
+      "en": "Английский",
+      "ru": "Русский"
+    }
   },
   "footer": {
     "email": "seryozha.okhta@gmail.com",
