@@ -70,5 +70,7 @@
     "languages": "Languages:",
     "frameworks": "Frameworks:",
     "other": "Other:"
-  }
+  },
+  "designerPortfolioTitle": "My Design Works",
+  "developerPortfolioTitle": "My Dev Projects"
 }

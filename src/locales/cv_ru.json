@@ -70,5 +70,7 @@
     "languages": "Языки:",
     "frameworks": "Фреймворки:",
     "other": "Прочее:"
-  }
+  },
+  "designerPortfolioTitle": "Мои дизайнерские проекты",
+  "developerPortfolioTitle": "Мои dev-проекты"
 }
