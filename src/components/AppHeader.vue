@@ -44,7 +44,6 @@ import CVButton from "./CVButton.vue";
 .app-header__title {
   margin: 0;
   font-size: 24px;
-  color: var(--text-color);
 }
 
 .app-header__controls {

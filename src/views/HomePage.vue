@@ -1,5 +1,4 @@
 <!-- src/views/HomePage.vue -->
-
 <template>
   <div class="home">
     <ShaderEffect :params="params" :c="c" :theme="themeValue" />
@@ -18,6 +17,7 @@ import ShaderTitle from "@/components/ShaderTitle.vue";
 const { params, c, randomizeC, updateParam } = useShader();
 const { themeValue } = useTheme();
 
+// dat.GUI handler
 const handleUpdate = (key, value) => {
   if (key === "randomizeC") {
     randomizeC();

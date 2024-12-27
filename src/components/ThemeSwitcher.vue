@@ -11,13 +11,13 @@ import { computed } from "vue";
 import { useTheme } from "@/composables/useTheme";
 import { useI18n } from "vue-i18n";
 
-// Получаем функцию перевода
+/**
+ * Если themeValue < 0.5 => "Day"
+ * Если themeValue >= 0.5 => "Night"
+ */
 const { t } = useI18n();
-
-// Получаем themeValue и toggleTheme из composable
 const { themeValue, toggleTheme } = useTheme();
 
-// Вычисляемая метка для кнопки с использованием перевода
 const themeLabel = computed(() => {
   return themeValue.value >= 0.5
     ? t("header.theme.night")

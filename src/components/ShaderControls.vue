@@ -21,4 +21,8 @@ const guiContainer = ref(null);
 useShaderGUI(props.params, props.onUpdate, guiContainer);
 </script>
 
-<style scoped></style>
+<style scoped>
+.gui-container {
+  display: none;
+}
+</style>

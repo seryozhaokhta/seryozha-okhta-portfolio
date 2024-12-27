@@ -3,8 +3,6 @@
 /* Общие стили для типографики */
 body {
   font-family: Helvetica, sans-serif;
-  color: var(--text-color);
-  transition: color 0.5s;
 }
 
 h1,
@@ -14,6 +12,5 @@ h4,
 h5,
 h6,
 p {
-  color: var(--text-color);
   transition: color 0.5s;
 }

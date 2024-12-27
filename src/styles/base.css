@@ -6,7 +6,6 @@ body {
   padding: 0;
   overflow-x: hidden;
   font-family: Helvetica, sans-serif;
-  color: var(--text-color);
 }
 
 * {

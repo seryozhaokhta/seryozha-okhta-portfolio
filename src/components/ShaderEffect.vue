@@ -13,34 +13,26 @@ import fragShader from "../assets/shader.frag";
 import vertShader from "../assets/shader.vert";
 
 const props = defineProps({
-  params: {
-    type: Object,
-    required: true,
-  },
-  c: {
-    type: Array,
-    required: true,
-  },
-  theme: {
-    type: Number,
-    required: true,
-  },
+  params: Object,
+  c: Array,
+  theme: Number,
 });
 
 const canvasContainer = ref(null);
 let shaderProgram = null;
 
 const buildC = () => {
-  const c = [];
+  const newC = [];
   for (let i = 0; i < props.c.length; i++) {
-    c[i] = props.c[i];
+    newC[i] = props.c[i];
   }
-  return c;
+  return newC;
 };
 
 const sketch = (p) => {
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL);
+
     shaderProgram = p.createShader(vertShader, fragShader);
     p.shader(shaderProgram);
 
@@ -100,5 +92,3 @@ watch(
   }
 );
 </script>
-
-<style scoped></style>

@@ -1,5 +1,4 @@
-<!-- App.vue -->
-
+<!-- src/App.vue -->
 <template>
   <div class="app">
     <header class="app__header">
@@ -22,18 +21,23 @@ import { useTheme } from "@/composables/useTheme";
 
 const { themeValue } = useTheme();
 
+/**
+ * Если themeValue >= 0.5 => добавляем "night-theme"
+ * Иначе убираем
+ */
 const themeClass = computed(() => {
-  return themeValue.value >= 0.5 ? "dark-theme" : "";
+  return themeValue.value >= 0.5 ? "night-theme" : "";
 });
 
+// Применяем/убираем класс на <body>
 watch(
   themeClass,
   (newClass) => {
     const body = document.body;
-    if (newClass === "dark-theme") {
-      body.classList.add("dark-theme");
+    if (newClass === "night-theme") {
+      body.classList.add("night-theme");
     } else {
-      body.classList.remove("dark-theme");
+      body.classList.remove("night-theme");
     }
   },
   { immediate: true }
@@ -45,8 +49,6 @@ watch(
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--background-color);
-  color: var(--text-color);
 }
 
 .app__header {
@@ -71,6 +73,5 @@ watch(
   align-items: center;
   background-color: var(--footer-background);
   padding: 20px;
-  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
 }
 </style>

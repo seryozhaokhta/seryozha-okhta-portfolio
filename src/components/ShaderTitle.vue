@@ -3,7 +3,7 @@
 <template>
   <div class="shader-title">
     <h1 class="shader-title__intro-name">
-      <!-- preName с плавным переходом -->
+      <!-- preName -->
       <span
         :class="{ 'shader-title__faded': isHover }"
         style="transition: opacity 0.5s, filter 0.5s"
@@ -11,28 +11,27 @@
         {{ t("intro.preName") }}
       </span>
 
-      <!-- name-part без класса faded и без transition -->
+      <!-- name-part -->
       <span
         @mouseenter="hoverName(true)"
         @mouseleave="hoverName(false)"
         class="shader-title__name-part"
       >
-        <!-- Используем части имени из локализации -->
         <span class="shader-title__name">
-          <span class="shader-title__name-prefix">{{
-            t("intro.namePrefix")
-          }}</span>
+          <span class="shader-title__name-prefix">
+            {{ t("intro.namePrefix") }}
+          </span>
           <span class="shader-title__name-letter-o" ref="nameLetterO">
             {{ t("intro.nameO") }}
             <span class="shader-title__accent" ref="accent">́</span>
           </span>
-          <span class="shader-title__name-suffix">{{
-            t("intro.nameSuffix")
-          }}</span>
+          <span class="shader-title__name-suffix">
+            {{ t("intro.nameSuffix") }}
+          </span>
         </span>
       </span>
 
-      <!-- postName с плавным переходом -->
+      <!-- postName -->
       <span
         :class="{ 'shader-title__faded': isHover }"
         style="transition: opacity 0.5s, filter 0.5s"
@@ -41,7 +40,7 @@
       </span>
     </h1>
 
-    <!-- intro-description с плавным переходом -->
+    <!-- intro-description -->
     <p
       :class="{ 'shader-title__faded': isHover }"
       style="transition: opacity 0.5s, filter 0.5s"
@@ -82,11 +81,16 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--text-color);
   text-align: left;
   padding: 20px 40px;
   border-radius: 10px;
   z-index: 10;
+  /* === ВАЖНО ===
+     Вместо обычной var(--text-color),
+     используем var(--shader-title-exclusion-color)
+     для эффекта "exclusion" на белом/чёрном фоне.
+  */
+  color: var(--shader-title-exclusion-color);
   mix-blend-mode: exclusion;
 }
 
@@ -103,9 +107,9 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-/* Сохраняем логику margin-right, заменяя селектор по необходимости */
+/* Пробел между span-ами */
 .shader-title__intro-name > span:not(.shader-title__name-part) {
-  margin-right: 0.22em; /* Добавляет промежуток между элементами */
+  margin-right: 0.22em;
 }
 
 .shader-title__intro-description {
@@ -113,6 +117,7 @@ onMounted(() => {
   font-size: 18px;
 }
 
+/* Остальные стили (hover, accent) — без изменений */
 .shader-title__name-part {
   display: inline-block;
   position: relative;
