@@ -46,7 +46,7 @@
       >
         <h4>
           {{ job.role }}
-          <template v-if="job.company">at {{ job.company }}</template>
+          <template v-if="job.company"> at {{ job.company }}</template>
         </h4>
         <span class="designer-cv-section__job-years">{{ job.years }}</span>
         <p class="designer-cv-section__job-description">
@@ -98,7 +98,7 @@
                 class="portfolio-item__action-btn"
                 @click="openFullscreen(item)"
               >
-                <!-- Иконка "Fullscreen" -->
+                <!-- Иконка "fullscreen" -->
                 <svg
                   width="18"
                   height="18"
@@ -113,16 +113,32 @@
               </button>
             </div>
 
-            <!-- Тип "youtube" -->
-            <iframe
+            <!-- Медиа: YouTube -->
+            <div
               v-if="item.type === 'youtube'"
-              class="portfolio-item__media portfolio-item__media--iframe"
-              :src="item.src"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              class="portfolio-item__media portfolio-item__media--youtube"
+              @click="openFullscreen(item)"
             >
-            </iframe>
+              <img
+                :src="getYoutubeThumbnail(item.src)"
+                :alt="item.alt"
+                class="portfolio-item__youtube-thumbnail"
+              />
+              <div class="play-button-overlay">
+                <svg
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="white"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" r="10" fill="rgba(0,0,0,0.6)" />
+                  <polygon points="10,8 16,12 10,16" fill="white" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Медиа: image/gif/video -->
             <img
               v-else-if="item.type === 'image' || item.type === 'gif'"
               :src="item.src"
@@ -139,6 +155,7 @@
               <source :src="item.src" type="video/mp4" />
             </video>
 
+            <!-- Подпись -->
             <p class="portfolio-item__caption" v-if="item.caption">
               {{ item.caption }}
             </p>
@@ -183,7 +200,7 @@
                 class="portfolio-item__action-btn"
                 @click="openFullscreen(item)"
               >
-                <!-- Иконка "Fullscreen" -->
+                <!-- Иконка "fullscreen" -->
                 <svg
                   width="18"
                   height="18"
@@ -198,7 +215,7 @@
               </button>
             </div>
 
-            <!-- Медиа: img/gif/video -->
+            <!-- Медиа: image/gif/video -->
             <img
               v-if="item.type === 'image' || item.type === 'gif'"
               :src="item.src"
@@ -215,6 +232,7 @@
               <source :src="item.src" type="video/mp4" />
             </video>
 
+            <!-- Подпись -->
             <p class="portfolio-item__caption" v-if="item.caption">
               {{ item.caption }}
             </p>
@@ -229,19 +247,26 @@
       class="fullscreen-overlay"
       @click.self="closeFullscreen"
     >
+      <!-- Кнопка Закрыть -->
       <button class="fullscreen-overlay__close" @click="closeFullscreen">
         ✕
       </button>
-      <div class="fullscreen-overlay__content">
-        <!-- if youtube, iframe; else if image/gif, <img>; else if video, <video> -->
-        <iframe
-          v-if="fullscreenItem.type === 'youtube'"
-          :src="fullscreenItem.src"
-          class="fullscreen-media"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
 
+      <div class="fullscreen-overlay__content">
+        <!-- YouTube-видео -->
+        <div
+          v-if="fullscreenItem.type === 'youtube'"
+          class="fullscreen-media fullscreen-media--youtube"
+        >
+          <iframe
+            :src="fullscreenItem.src"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <!-- Изображение/gif -->
         <img
           v-else-if="
             fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
@@ -250,6 +275,8 @@
           :alt="fullscreenItem.alt"
           class="fullscreen-media"
         />
+
+        <!-- Видео -->
         <video
           v-else-if="fullscreenItem.type === 'video'"
           class="fullscreen-media"
@@ -274,12 +301,12 @@ import cvRu from "@/locales/cv_ru.json";
 // Локализация
 const { locale, t } = useI18n();
 
-// Данные дизайнера
+// Данные о дизайнере
 const designerData = computed(() => {
   return locale.value === "en" ? cvEn.designer : cvRu.designer;
 });
 
-// === Новая категория: Motion & 3D design ===
+// Основные проекты (например, Motion & 3D Design)
 const motionMedia = [
   {
     type: "youtube",
@@ -290,7 +317,7 @@ const motionMedia = [
   },
 ];
 
-// === Вторая категория: UX/UI design ===
+// UX/UI дизайн проекты
 const designerMedia = [
   {
     type: "image",
@@ -315,7 +342,19 @@ const designerMedia = [
   },
 ];
 
-// Фуллскрин
+// Функция для получения URL превью YouTube-видео
+function getYoutubeThumbnail(src) {
+  try {
+    const url = new URL(src);
+    const videoId = url.pathname.split("/").pop();
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  } catch (error) {
+    console.error("Invalid YouTube URL:", src);
+    return "";
+  }
+}
+
+// Модель фуллскрина
 const fullscreenItem = ref(null);
 function openFullscreen(item) {
   fullscreenItem.value = item;
@@ -354,13 +393,16 @@ function closeFullscreen() {
 .designer-cv-section__experience {
   margin-top: 20px;
 }
+
 .designer-cv-section__job {
   margin-bottom: 15px;
 }
+
 .designer-cv-section__job-years {
   font-size: 0.9em;
   color: #555;
 }
+
 .designer-cv-section__job-description {
   margin: 5px 0 0 0;
   color: var(--text-color);
@@ -370,6 +412,7 @@ function closeFullscreen() {
 .designer-cv-section__portfolio {
   margin-top: 40px;
 }
+
 .designer-cv-section__portfolio-title {
   font-size: 20px;
   margin-bottom: 16px;
@@ -380,6 +423,7 @@ function closeFullscreen() {
 .designer-cv-section__portfolio-category {
   margin-bottom: 30px;
 }
+
 .designer-cv-section__portfolio-category h4 {
   font-size: 18px;
   margin-bottom: 10px;
@@ -393,23 +437,21 @@ function closeFullscreen() {
 }
 
 .portfolio-item {
+  position: relative;
   background: var(--button-background);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   padding: 10px;
   text-align: center;
-  position: relative;
   transition: background 0.3s;
 
-  /* Аналогично developer */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
 }
-
 .portfolio-item:hover {
-  background: var(--button-hover-background, rgba(255, 255, 255, 0.2));
+  background: var(--button-hover-background, rgba(0, 0, 0, 0.2));
 }
 
 .portfolio-item__actions {
@@ -419,7 +461,6 @@ function closeFullscreen() {
   display: flex;
   gap: 6px;
 }
-
 .portfolio-item__action-btn {
   background: none;
   border: none;
@@ -432,18 +473,36 @@ function closeFullscreen() {
   opacity: 1;
 }
 
+/* Медиа */
 .portfolio-item__media {
-  border-radius: 4px;
   display: block;
+  border-radius: 4px;
+  margin-top: 30px;
+  width: 100%;
   object-fit: contain;
   object-position: center;
-  width: 100%;
-  max-height: 200px;
-  margin-top: 30px;
 }
 
-.portfolio-item__media--iframe {
-  min-height: 200px;
+/* YouTube-thumbnail */
+.portfolio-item__youtube-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Наложение с иконкой воспроизведения */
+.play-button-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* чтобы клики проходили через наложение */
+}
+
+/* img/gif/video => 200px */
+.portfolio-item__media:not(.portfolio-item__youtube-thumbnail) {
+  max-height: 200px;
 }
 
 .portfolio-item__caption {
@@ -452,16 +511,17 @@ function closeFullscreen() {
   color: var(--text-color);
 }
 
-/* Фуллскрин */
+/* --- Фуллскрин --- */
 .fullscreen-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
   z-index: 999;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
+
 .fullscreen-overlay__close {
   position: absolute;
   top: 20px;
@@ -471,21 +531,36 @@ function closeFullscreen() {
   color: #fff;
   font-size: 28px;
   cursor: pointer;
+  z-index: 1000;
 }
+
 .fullscreen-overlay__content {
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  max-width: 95vw;
-  max-height: 95vh;
-  overflow: auto;
+  justify-content: center;
 }
+
+/* Медиа для фуллскрин */
 .fullscreen-media {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
+  border: none;
   object-fit: contain;
   object-position: center;
+  margin: 0 auto;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* Специфические стили для YouTube в фуллскрин */
+.fullscreen-media--youtube {
+  aspect-ratio: 16 / 9;
+  width: 80%;
+  height: auto;
+}
+.fullscreen-media--youtube iframe {
+  width: 100%;
+  height: 100%;
   border-radius: 4px;
 }
 </style>

@@ -56,7 +56,7 @@
       >
         <h4>
           {{ job.role }}
-          <template v-if="job.company">at {{ job.company }}</template>
+          <template v-if="job.company"> at {{ job.company }}</template>
         </h4>
         <span class="developer-cv-section__job-years">{{ job.years }}</span>
         <p class="developer-cv-section__job-description">
@@ -71,8 +71,11 @@
         {{ $t("cv.developerPortfolioTitle") || "My Dev Projects" }}
       </h3>
 
-      <!-- === Первая сетка (основные проекты) === -->
+      <!-- === Первая категория: Основные проекты === -->
       <div class="developer-cv-section__portfolio-category">
+        <h4>
+          {{ $t("cv.developerPortfolioMainProjectsTitle") || "Main Projects" }}
+        </h4>
         <div class="developer-cv-section__grid">
           <div
             v-for="(item, idx) in developerMedia"
@@ -147,12 +150,17 @@
         </div>
       </div>
 
-      <!-- === Вторая сетка (наброски) === -->
+      <!-- === Вторая категория: Дополнительные проекты === -->
       <div class="developer-cv-section__portfolio-category">
-        <h4>{{ $t("cv.developerPortfolioSketchesTitle") }}</h4>
+        <h4>
+          {{
+            $t("cv.developerPortfolioAdditionalProjectsTitle") ||
+            "Additional Projects"
+          }}
+        </h4>
         <div class="developer-cv-section__grid">
           <div
-            v-for="(item, idx) in developerSketches"
+            v-for="(item, idx) in developerAdditionalMedia"
             :key="idx"
             class="portfolio-item"
           >
@@ -199,18 +207,9 @@
               </button>
             </div>
 
-            <!-- iframe -->
-            <iframe
-              v-if="item.type === 'iframe'"
-              :src="item.src"
-              scrolling="no"
-              class="portfolio-item__media portfolio-item__media--iframe-card"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
-
+            <!-- Медиа: image/gif/video -->
             <img
-              v-else-if="item.type === 'image' || item.type === 'gif'"
+              v-if="item.type === 'image' || item.type === 'gif'"
               :src="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
@@ -225,6 +224,7 @@
               <source :src="item.src" type="video/mp4" />
             </video>
 
+            <!-- Подпись -->
             <p class="portfolio-item__caption" v-if="item.caption">
               {{ item.caption }}
             </p>
@@ -245,26 +245,15 @@
       </button>
 
       <div class="fullscreen-overlay__content">
-        <!-- IF IF-iframe => на весь экран, ELSE => 90% -->
-        <iframe
-          v-if="fullscreenItem.type === 'iframe'"
-          :src="fullscreenItem.src"
-          class="fullscreen-media fullscreen-media--cover"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-
-        <!-- Картинка/gif -> 90% -->
+        <!-- Изображение/gif/video -->
         <img
-          v-else-if="
+          v-if="
             fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
           "
           :src="fullscreenItem.src"
           :alt="fullscreenItem.alt"
           class="fullscreen-media"
         />
-
-        <!-- Видео -> 90% -->
         <video
           v-else-if="fullscreenItem.type === 'video'"
           class="fullscreen-media"
@@ -329,14 +318,28 @@ const developerMedia = [
   },
 ];
 
-// Наброски (iframe)
-const developerSketches = [
+// Дополнительные проекты
+const developerAdditionalMedia = [
   {
-    type: "iframe",
-    src: "https://openprocessing.org/sketch/1950042/embed",
-    alt: "OpenProcessing Sketch #1950042",
-    caption: "OpenProcessing experiment",
-    link: "https://openprocessing.org/sketch/1950042",
+    type: "image",
+    src: new URL("@/assets/developer/additional_project1.jpg", import.meta.url),
+    alt: "Additional Project 1",
+    caption: "Description for additional project 1",
+    link: "https://example.com/additional-project1",
+  },
+  {
+    type: "video",
+    src: new URL("@/assets/developer/additional_project2.mp4", import.meta.url),
+    alt: "Additional Project 2",
+    caption: "Description for additional project 2",
+    link: "https://example.com/additional-project2",
+  },
+  {
+    type: "gif",
+    src: new URL("@/assets/developer/additional_project3.gif", import.meta.url),
+    alt: "Additional Project 3",
+    caption: "Description for additional project 3",
+    link: "https://example.com/additional-project3",
   },
 ];
 
@@ -367,7 +370,49 @@ function closeFullscreen() {
   color: var(--text-color);
 }
 
-/* ... Остальные базовые стили: skills, experience, etc. ... */
+/* Навыки */
+.developer-cv-section__skills {
+  margin-top: 20px;
+}
+.developer-cv-section__skills-category {
+  margin-bottom: 15px;
+}
+
+/* Опыт */
+.developer-cv-section__experience {
+  margin-top: 20px;
+}
+.developer-cv-section__job {
+  margin-bottom: 15px;
+}
+.developer-cv-section__job-years {
+  font-size: 0.9em;
+  color: #555;
+}
+.developer-cv-section__job-description {
+  margin: 5px 0 0 0;
+  color: var(--text-color);
+}
+
+/* Портфолио */
+.developer-cv-section__portfolio {
+  margin-top: 40px;
+}
+.developer-cv-section__portfolio-title {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+/* Подкатегории внутри портфолио */
+.developer-cv-section__portfolio-category {
+  margin-bottom: 30px;
+}
+.developer-cv-section__portfolio-category h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
 
 .developer-cv-section__grid {
   display: grid;
@@ -389,9 +434,8 @@ function closeFullscreen() {
   align-items: center;
   justify-content: flex-start;
 }
-
 .portfolio-item:hover {
-  background: var(--button-hover-background, rgba(255, 255, 255, 0.2));
+  background: var(--button-hover-background, rgba(0, 0, 0, 0.2));
 }
 
 .portfolio-item__actions {
@@ -428,16 +472,6 @@ function closeFullscreen() {
   max-height: 200px;
 }
 
-/* iframe => 400px */
-.portfolio-item__media--iframe-card {
-  border: none;
-  overflow: hidden;
-  margin: 0 auto;
-  /* scrolling: no; */
-  width: 100%;
-  height: 400px;
-}
-
 .portfolio-item__caption {
   margin: 10px 0 0 0;
   font-size: 14px;
@@ -450,11 +484,11 @@ function closeFullscreen() {
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
   z-index: 999;
-
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .fullscreen-overlay__close {
   position: absolute;
   top: 20px;
@@ -464,7 +498,7 @@ function closeFullscreen() {
   color: #fff;
   font-size: 28px;
   cursor: pointer;
-  z-index: 9999; /* чтобы крестик был выше видео */
+  z-index: 1000; /* чтобы крестик был выше контента */
 }
 
 .fullscreen-overlay__content {
@@ -475,7 +509,6 @@ function closeFullscreen() {
   justify-content: center;
 }
 
-/* Общее (для изображений/видео) */
 .fullscreen-media {
   border: none;
   object-fit: contain;
@@ -483,13 +516,5 @@ function closeFullscreen() {
   margin: 0 auto;
   max-width: 90%;
   max-height: 90%;
-}
-
-/* Только для iframe (скетч), делаем на весь экран */
-.fullscreen-media--cover {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
 }
 </style>

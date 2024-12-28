@@ -75,5 +75,6 @@
   "designerPortfolioMotionTitle": "Моушн и 3D-дизайн",
   "designerPortfolioUxuiTitle": "UX/UI дизайн",
   "developerPortfolioTitle": "Мои dev-проекты",
-  "developerPortfolioSketchesTitle": "Наброски"
+  "developerPortfolioMainProjectsTitle": "Разработка",
+  "developerPortfolioAdditionalProjectsTitle": "Наброски"
 }

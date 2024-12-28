@@ -75,5 +75,6 @@
   "designerPortfolioMotionTitle": "Motion & 3D Design",
   "designerPortfolioUxuiTitle": "UX/UI Design",
   "developerPortfolioTitle": "My Dev Projects",
-  "developerPortfolioSketchesTitle": "Sketches"
+  "developerPortfolioMainProjectsTitle": "Development",
+  "developerPortfolioAdditionalProjectsTitle": "Sketches"
 }
