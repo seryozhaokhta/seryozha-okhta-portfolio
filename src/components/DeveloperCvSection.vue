@@ -81,6 +81,8 @@
             v-for="(item, idx) in developerMedia"
             :key="idx"
             class="portfolio-item"
+            @mouseover="setHovered(idx)"
+            @mouseleave="unsetHovered"
           >
             <div class="portfolio-item__actions">
               <a
@@ -127,10 +129,18 @@
 
             <!-- Медиа: image/gif/video -->
             <img
-              v-if="item.type === 'image' || item.type === 'gif'"
+              v-if="item.type === 'image'"
               :src="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
+              loading="lazy"
+            />
+            <img
+              v-else-if="item.type === 'gif'"
+              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              :alt="item.alt"
+              class="portfolio-item__media"
+              loading="lazy"
             />
             <video
               v-else-if="item.type === 'video'"
@@ -138,8 +148,10 @@
               controls
               muted
               playsinline
+              preload="metadata"
             >
               <source :src="item.src" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
             <!-- Подпись -->
@@ -163,6 +175,8 @@
             v-for="(item, idx) in developerAdditionalMedia"
             :key="idx"
             class="portfolio-item"
+            @mouseover="setHovered(idx)"
+            @mouseleave="unsetHovered"
           >
             <div class="portfolio-item__actions">
               <a
@@ -209,10 +223,18 @@
 
             <!-- Медиа: image/gif/video -->
             <img
-              v-if="item.type === 'image' || item.type === 'gif'"
+              v-if="item.type === 'image'"
               :src="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
+              loading="lazy"
+            />
+            <img
+              v-else-if="item.type === 'gif'"
+              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              :alt="item.alt"
+              class="portfolio-item__media"
+              loading="lazy"
             />
             <video
               v-else-if="item.type === 'video'"
@@ -220,8 +242,10 @@
               controls
               muted
               playsinline
+              preload="metadata"
             >
               <source :src="item.src" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
             <!-- Подпись -->
@@ -245,9 +269,22 @@
       </button>
 
       <div class="fullscreen-overlay__content">
+        <!-- YouTube-видео -->
+        <div
+          v-if="fullscreenItem.type === 'youtube'"
+          class="fullscreen-media fullscreen-media--youtube"
+        >
+          <iframe
+            :src="fullscreenItem.src"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+
         <!-- Изображение/gif/video -->
         <img
-          v-if="
+          v-else-if="
             fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
           "
           :src="fullscreenItem.src"
@@ -261,8 +298,10 @@
           autoplay
           muted
           playsinline
+          preload="metadata"
         >
           <source :src="fullscreenItem.src" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
       </div>
     </div>
@@ -301,6 +340,7 @@ const developerMedia = [
     alt: "Video snippet of coding session",
     caption: "Short snippet of coding session",
     link: "https://greenhouse-react.vercel.app/",
+    preload: "metadata", // Добавлено для оптимизации
   },
   {
     type: "image",
@@ -315,33 +355,38 @@ const developerMedia = [
     alt: "3D data visualization with Three.js",
     caption: "Animated 3D visualization",
     link: "https://enheduanna.vercel.app/",
+    placeholderSrc: new URL(
+      "@/assets/developer/enheduanna-placeholder.jpg",
+      import.meta.url
+    ), // Placeholder изображение
   },
 ];
 
 // Дополнительные проекты
 const developerAdditionalMedia = [
-  // {
-  //   type: "image",
-  //   src: new URL("@/assets/developer/additional_project1.jpg", import.meta.url),
-  //   alt: "Additional Project 1",
-  //   caption: "Description for additional project 1",
-  //   link: "https://example.com/additional-project1",
-  // },
-  // {
-  //   type: "video",
-  //   src: new URL("@/assets/developer/additional_project2.mp4", import.meta.url),
-  //   alt: "Additional Project 2",
-  //   caption: "Description for additional project 2",
-  //   link: "https://example.com/additional-project2",
-  // },
   {
     type: "gif",
     src: new URL("@/assets/developer/flower of particles.gif", import.meta.url),
     alt: "Additional Project 3",
     caption: "Description for additional project 3",
-    link: "https://example.com/additional-project3",
+    link: "https://openprocessing.org/sketch/1950042",
+    placeholderSrc: new URL(
+      "@/assets/developer/flower-of-particles-placeholder.jpg",
+      import.meta.url
+    ), // Placeholder изображение
   },
 ];
+
+// Состояние для отслеживания наведения
+const hoveredIndex = ref(null);
+
+function setHovered(index) {
+  hoveredIndex.value = index;
+}
+
+function unsetHovered() {
+  hoveredIndex.value = null;
+}
 
 // Модель фуллскрина
 const fullscreenItem = ref(null);
@@ -467,8 +512,25 @@ function closeFullscreen() {
   object-position: center;
 }
 
+/* YouTube-thumbnail */
+.portfolio-item__youtube-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Наложение с иконкой воспроизведения */
+.play-button-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* чтобы клики проходили через наложение */
+}
+
 /* img/gif/video => 200px */
-.portfolio-item__media:not(.portfolio-item__media--iframe-card) {
+.portfolio-item__media:not(.portfolio-item__youtube-thumbnail) {
   max-height: 200px;
 }
 
@@ -509,6 +571,7 @@ function closeFullscreen() {
   justify-content: center;
 }
 
+/* Медиа для фуллскрин */
 .fullscreen-media {
   border: none;
   object-fit: contain;
@@ -516,5 +579,17 @@ function closeFullscreen() {
   margin: 0 auto;
   max-width: 90%;
   max-height: 90%;
+}
+
+/* Специфические стили для YouTube в фуллскрин */
+.fullscreen-media--youtube {
+  aspect-ratio: 16 / 9;
+  width: 80%;
+  height: auto;
+}
+.fullscreen-media--youtube iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
 }
 </style>

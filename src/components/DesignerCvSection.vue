@@ -69,6 +69,7 @@
             v-for="(item, idx) in motionMedia"
             :key="idx"
             class="portfolio-item"
+            @click="openFullscreen(item)"
           >
             <div class="portfolio-item__actions">
               <a
@@ -96,7 +97,7 @@
               </a>
               <button
                 class="portfolio-item__action-btn"
-                @click="openFullscreen(item)"
+                @click.stop="openFullscreen(item)"
               >
                 <!-- Иконка "fullscreen" -->
                 <svg
@@ -117,12 +118,12 @@
             <div
               v-if="item.type === 'youtube'"
               class="portfolio-item__media portfolio-item__media--youtube"
-              @click="openFullscreen(item)"
             >
               <img
-                :src="getYoutubeThumbnail(item.src)"
+                :src="item.placeholderSrc"
                 :alt="item.alt"
                 class="portfolio-item__youtube-thumbnail"
+                loading="lazy"
               />
               <div class="play-button-overlay">
                 <svg
@@ -140,87 +141,20 @@
 
             <!-- Медиа: image/gif/video -->
             <img
-              v-else-if="item.type === 'image' || item.type === 'gif'"
+              v-else-if="item.type === 'image'"
               :src="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
+              loading="lazy"
             />
-            <video
-              v-else-if="item.type === 'video'"
-              class="portfolio-item__media"
-              controls
-              muted
-              playsinline
-            >
-              <source :src="item.src" type="video/mp4" />
-            </video>
-
-            <!-- Подпись -->
-            <p class="portfolio-item__caption" v-if="item.caption">
-              {{ item.caption }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ==== Категория 2: UX/UI дизайн ==== -->
-      <div class="designer-cv-section__portfolio-category">
-        <h4>{{ $t("cv.designerPortfolioUxuiTitle") }}</h4>
-        <div class="designer-cv-section__grid">
-          <div
-            v-for="(item, idx) in designerMedia"
-            :key="idx"
-            class="portfolio-item"
-          >
-            <div class="portfolio-item__actions">
-              <a
-                v-if="item.link"
-                :href="item.link"
-                target="_blank"
-                rel="noopener"
-                class="portfolio-item__action-btn"
-              >
-                <!-- Иконка-ссылка -->
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
-                  />
-                  <path
-                    d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
-                  />
-                </svg>
-              </a>
-              <button
-                class="portfolio-item__action-btn"
-                @click="openFullscreen(item)"
-              >
-                <!-- Иконка "fullscreen" -->
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <!-- Медиа: image/gif/video -->
             <img
-              v-if="item.type === 'image' || item.type === 'gif'"
-              :src="item.src"
+              v-else-if="item.type === 'gif'"
+              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
               :alt="item.alt"
               class="portfolio-item__media"
+              loading="lazy"
+              @mouseover="setHovered(idx)"
+              @mouseleave="unsetHovered"
             />
             <video
               v-else-if="item.type === 'video'"
@@ -228,8 +162,10 @@
               controls
               muted
               playsinline
+              preload="metadata"
             >
               <source :src="item.src" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
             <!-- Подпись -->
@@ -238,55 +174,147 @@
             </p>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Фуллскрин оверлей -->
-    <div
-      v-if="fullscreenItem"
-      class="fullscreen-overlay"
-      @click.self="closeFullscreen"
-    >
-      <!-- Кнопка Закрыть -->
-      <button class="fullscreen-overlay__close" @click="closeFullscreen">
-        ✕
-      </button>
+        <!-- ==== Категория 2: UX/UI дизайн ==== -->
+        <div class="designer-cv-section__portfolio-category">
+          <h4>{{ $t("cv.designerPortfolioUxuiTitle") }}</h4>
+          <div class="designer-cv-section__grid">
+            <div
+              v-for="(item, idx) in designerMedia"
+              :key="idx"
+              class="portfolio-item"
+              @mouseover="setHovered(idx)"
+              @mouseleave="unsetHovered"
+            >
+              <div class="portfolio-item__actions">
+                <a
+                  v-if="item.link"
+                  :href="item.link"
+                  target="_blank"
+                  rel="noopener"
+                  class="portfolio-item__action-btn"
+                >
+                  <!-- Иконка-ссылка -->
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
+                    />
+                    <path
+                      d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
+                    />
+                  </svg>
+                </a>
+                <button
+                  class="portfolio-item__action-btn"
+                  @click.stop="openFullscreen(item)"
+                >
+                  <!-- Иконка "fullscreen" -->
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
+                    />
+                  </svg>
+                </button>
+              </div>
 
-      <div class="fullscreen-overlay__content">
-        <!-- YouTube-видео -->
-        <div
-          v-if="fullscreenItem.type === 'youtube'"
-          class="fullscreen-media fullscreen-media--youtube"
-        >
-          <iframe
-            :src="fullscreenItem.src"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+              <!-- Медиа: image/gif/video -->
+              <img
+                v-if="item.type === 'image'"
+                :src="item.src"
+                :alt="item.alt"
+                class="portfolio-item__media"
+                loading="lazy"
+              />
+              <img
+                v-else-if="item.type === 'gif'"
+                :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+                :alt="item.alt"
+                class="portfolio-item__media"
+                loading="lazy"
+                @mouseover="setHovered(idx)"
+                @mouseleave="unsetHovered"
+              />
+              <video
+                v-else-if="item.type === 'video'"
+                class="portfolio-item__media"
+                controls
+                muted
+                playsinline
+                preload="metadata"
+              >
+                <source :src="item.src" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              <!-- Подпись -->
+              <p class="portfolio-item__caption" v-if="item.caption">
+                {{ item.caption }}
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- Закрытие .portfolio-category -->
 
-        <!-- Изображение/gif -->
-        <img
-          v-else-if="
-            fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
-          "
-          :src="fullscreenItem.src"
-          :alt="fullscreenItem.alt"
-          class="fullscreen-media"
-        />
+      <!-- Фуллскрин оверлей -->
+      <div
+        v-if="fullscreenItem"
+        class="fullscreen-overlay"
+        @click.self="closeFullscreen"
+      >
+        <!-- Кнопка Закрыть -->
+        <button class="fullscreen-overlay__close" @click="closeFullscreen">
+          ✕
+        </button>
 
-        <!-- Видео -->
-        <video
-          v-else-if="fullscreenItem.type === 'video'"
-          class="fullscreen-media"
-          controls
-          autoplay
-          muted
-          playsinline
-        >
-          <source :src="fullscreenItem.src" type="video/mp4" />
-        </video>
+        <div class="fullscreen-overlay__content">
+          <!-- YouTube-видео -->
+          <div
+            v-if="fullscreenItem.type === 'youtube'"
+            class="fullscreen-media fullscreen-media--youtube"
+          >
+            <iframe
+              :src="fullscreenItem.src"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <!-- Изображение/gif/video -->
+          <img
+            v-else-if="
+              fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
+            "
+            :src="fullscreenItem.src"
+            :alt="fullscreenItem.alt"
+            class="fullscreen-media"
+          />
+          <video
+            v-else-if="fullscreenItem.type === 'video'"
+            class="fullscreen-media"
+            controls
+            autoplay
+            muted
+            playsinline
+            preload="metadata"
+          >
+            <source :src="fullscreenItem.src" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
   </section>
@@ -314,26 +342,29 @@ const motionMedia = [
     alt: "Motion Design Demo",
     caption: "A short motion design reel",
     link: "https://www.youtube.com/watch?v=UydIPVDlZIY",
+    placeholderSrc: "https://img.youtube.com/vi/UydIPVDlZIY/hqdefault.jpg", // Placeholder изображение
   },
 ];
 
 // UX/UI дизайн проекты
 const designerMedia = [
-  // {
-  //   type: "image",
-  //   src: new URL("@/assets/designer/design_1.jpg", import.meta.url),
-  //   alt: "Mobile App UI/UX design",
-  //   caption: "UI for a mobile app",
-  //   link: "https://example.com/designer-mobile-app",
-  // },
   {
     type: "gif",
     src: new URL("@/assets/designer/ars-poetica.gif", import.meta.url),
     alt: "Animated wireframe",
     caption: "Wireframe animation in Figma",
     link: "https://ars-poetica.vercel.app/",
-  },
-  // {
+    placeholderSrc: new URL(
+      "@/assets/designer/ars-poetica-placeholder.jpg",
+      import.meta.url
+    ),
+  }, // {
+  //   type: "image",
+  //   src: new URL("@/assets/designer/design_1.jpg", import.meta.url),
+  //   alt: "Mobile App UI/UX design",
+  //   caption: "UI for a mobile app",
+  //   link: "https://example.com/designer-mobile-app",
+  // },  // {
   //   type: "video",
   //   src: new URL("@/assets/designer/ars-poetica.mp4", import.meta.url),
   //   alt: "Short design reel",
@@ -342,16 +373,15 @@ const designerMedia = [
   // },
 ];
 
-// Функция для получения URL превью YouTube-видео
-function getYoutubeThumbnail(src) {
-  try {
-    const url = new URL(src);
-    const videoId = url.pathname.split("/").pop();
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  } catch (error) {
-    console.error("Invalid YouTube URL:", src);
-    return "";
-  }
+// Состояние для отслеживания наведения
+const hoveredIndex = ref(null);
+
+function setHovered(index) {
+  hoveredIndex.value = index;
+}
+
+function unsetHovered() {
+  hoveredIndex.value = null;
 }
 
 // Модель фуллскрина
@@ -531,7 +561,7 @@ function closeFullscreen() {
   color: #fff;
   font-size: 28px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1000; /* чтобы крестик был выше контента */
 }
 
 .fullscreen-overlay__content {
