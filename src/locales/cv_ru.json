@@ -72,5 +72,8 @@
     "other": "Прочее:"
   },
   "designerPortfolioTitle": "Мои дизайнерские проекты",
-  "developerPortfolioTitle": "Мои dev-проекты"
+  "designerPortfolioMotionTitle": "Моушн и 3D-дизайн",
+  "designerPortfolioUxuiTitle": "UX/UI дизайн",
+  "developerPortfolioTitle": "Мои dev-проекты",
+  "developerPortfolioSketchesTitle": "Наброски"
 }

@@ -44,8 +44,8 @@
 body.night-theme {
   --background-color: #000000;
   --text-color: #ffffff;
-  --header-background: rgba(0, 0, 0, 0.2);
-  --footer-background: rgba(0, 0, 0, 0.2);
+  --header-background: rgba(0, 0, 0, 1);
+  --footer-background: rgba(0, 0, 0, 1);
 
   --button-background: rgba(255, 255, 255, 0.1);
   --button-text-color: #ffffff;

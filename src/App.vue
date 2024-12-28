@@ -1,4 +1,5 @@
 <!-- src/App.vue -->
+
 <template>
   <div class="app">
     <header class="app__header">
@@ -65,6 +66,7 @@ watch(
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--cv-background);
 }
 
 .app__footer {

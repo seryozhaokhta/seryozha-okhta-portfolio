@@ -71,77 +71,164 @@
         {{ $t("cv.developerPortfolioTitle") || "My Dev Projects" }}
       </h3>
 
-      <div class="developer-cv-section__grid">
-        <div
-          v-for="(item, idx) in developerMedia"
-          :key="idx"
-          class="portfolio-item"
-        >
-          <!-- Иконки-кнопки -->
-          <div class="portfolio-item__actions">
-            <a
-              v-if="item.link"
-              :href="item.link"
-              target="_blank"
-              rel="noopener"
-              class="portfolio-item__action-btn"
-            >
-              <!-- Иконка-ссылка -->
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
-                />
-                <path
-                  d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
-                />
-              </svg>
-            </a>
-            <button
-              class="portfolio-item__action-btn"
-              @click="openFullscreen(item)"
-            >
-              <!-- Иконка "fullscreen" -->
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <!-- Медиа -->
-          <img
-            v-if="item.type === 'image' || item.type === 'gif'"
-            :src="item.src"
-            :alt="item.alt"
-            class="portfolio-item__media"
-          />
-          <video
-            v-else-if="item.type === 'video'"
-            class="portfolio-item__media"
-            controls
-            muted
-            playsinline
+      <!-- === Первая сетка (основные проекты) === -->
+      <div class="developer-cv-section__portfolio-category">
+        <div class="developer-cv-section__grid">
+          <div
+            v-for="(item, idx) in developerMedia"
+            :key="idx"
+            class="portfolio-item"
           >
-            <source :src="item.src" type="video/mp4" />
-          </video>
+            <div class="portfolio-item__actions">
+              <a
+                v-if="item.link"
+                :href="item.link"
+                target="_blank"
+                rel="noopener"
+                class="portfolio-item__action-btn"
+              >
+                <!-- Иконка-ссылка -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
+                  />
+                  <path
+                    d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
+                  />
+                </svg>
+              </a>
+              <button
+                class="portfolio-item__action-btn"
+                @click="openFullscreen(item)"
+              >
+                <!-- Иконка "fullscreen" -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
+                  />
+                </svg>
+              </button>
+            </div>
 
-          <!-- Подпись -->
-          <p class="portfolio-item__caption" v-if="item.caption">
-            {{ item.caption }}
-          </p>
+            <!-- Медиа: image/gif/video -->
+            <img
+              v-if="item.type === 'image' || item.type === 'gif'"
+              :src="item.src"
+              :alt="item.alt"
+              class="portfolio-item__media"
+            />
+            <video
+              v-else-if="item.type === 'video'"
+              class="portfolio-item__media"
+              controls
+              muted
+              playsinline
+            >
+              <source :src="item.src" type="video/mp4" />
+            </video>
+
+            <!-- Подпись -->
+            <p class="portfolio-item__caption" v-if="item.caption">
+              {{ item.caption }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Вторая сетка (наброски) === -->
+      <div class="developer-cv-section__portfolio-category">
+        <h4>{{ $t("cv.developerPortfolioSketchesTitle") }}</h4>
+        <div class="developer-cv-section__grid">
+          <div
+            v-for="(item, idx) in developerSketches"
+            :key="idx"
+            class="portfolio-item"
+          >
+            <div class="portfolio-item__actions">
+              <a
+                v-if="item.link"
+                :href="item.link"
+                target="_blank"
+                rel="noopener"
+                class="portfolio-item__action-btn"
+              >
+                <!-- Иконка-ссылка -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
+                  />
+                  <path
+                    d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
+                  />
+                </svg>
+              </a>
+              <button
+                class="portfolio-item__action-btn"
+                @click="openFullscreen(item)"
+              >
+                <!-- Иконка "fullscreen" -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- iframe -->
+            <iframe
+              v-if="item.type === 'iframe'"
+              :src="item.src"
+              scrolling="no"
+              class="portfolio-item__media portfolio-item__media--iframe-card"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+
+            <img
+              v-else-if="item.type === 'image' || item.type === 'gif'"
+              :src="item.src"
+              :alt="item.alt"
+              class="portfolio-item__media"
+            />
+            <video
+              v-else-if="item.type === 'video'"
+              class="portfolio-item__media"
+              controls
+              muted
+              playsinline
+            >
+              <source :src="item.src" type="video/mp4" />
+            </video>
+
+            <p class="portfolio-item__caption" v-if="item.caption">
+              {{ item.caption }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -152,19 +239,35 @@
       class="fullscreen-overlay"
       @click.self="closeFullscreen"
     >
+      <!-- Кнопка Закрыть -->
       <button class="fullscreen-overlay__close" @click="closeFullscreen">
         ✕
       </button>
+
       <div class="fullscreen-overlay__content">
+        <!-- IF IF-iframe => на весь экран, ELSE => 90% -->
+        <iframe
+          v-if="fullscreenItem.type === 'iframe'"
+          :src="fullscreenItem.src"
+          class="fullscreen-media fullscreen-media--cover"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+
+        <!-- Картинка/gif -> 90% -->
         <img
-          v-if="
+          v-else-if="
             fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
           "
           :src="fullscreenItem.src"
           :alt="fullscreenItem.alt"
+          class="fullscreen-media"
         />
+
+        <!-- Видео -> 90% -->
         <video
           v-else-if="fullscreenItem.type === 'video'"
+          class="fullscreen-media"
           controls
           autoplay
           muted
@@ -191,7 +294,7 @@ const developerData = computed(() => {
   return locale.value === "en" ? cvEn.developer : cvRu.developer;
 });
 
-// Медиа
+// Основные проекты
 const developerMedia = [
   {
     type: "image",
@@ -226,7 +329,18 @@ const developerMedia = [
   },
 ];
 
-// Фуллскрин
+// Наброски (iframe)
+const developerSketches = [
+  {
+    type: "iframe",
+    src: "https://openprocessing.org/sketch/1950042/embed",
+    alt: "OpenProcessing Sketch #1950042",
+    caption: "OpenProcessing experiment",
+    link: "https://openprocessing.org/sketch/1950042",
+  },
+];
+
+// Модель фуллскрина
 const fullscreenItem = ref(null);
 function openFullscreen(item) {
   fullscreenItem.value = item;
@@ -247,45 +361,13 @@ function closeFullscreen() {
   margin-bottom: 10px;
   color: var(--text-color);
 }
+
 .developer-cv-section__description {
   margin-bottom: 20px;
-  /* Если хотите тот же цвет: */
   color: var(--text-color);
 }
 
-/* Навыки */
-.developer-cv-section__skills {
-  margin-top: 20px;
-}
-.developer-cv-section__skills-category {
-  margin-bottom: 15px;
-}
-
-/* Опыт */
-.developer-cv-section__experience {
-  margin-top: 20px;
-}
-.developer-cv-section__job {
-  margin-bottom: 15px;
-}
-.developer-cv-section__job-years {
-  font-size: 0.9em;
-  color: #555;
-}
-.developer-cv-section__job-description {
-  margin: 5px 0 0 0;
-  color: var(--text-color);
-}
-
-/* Портфолио */
-.developer-cv-section__portfolio {
-  margin-top: 40px;
-}
-.developer-cv-section__portfolio-title {
-  font-size: 20px;
-  margin-bottom: 16px;
-  color: var(--text-color);
-}
+/* ... Остальные базовые стили: skills, experience, etc. ... */
 
 .developer-cv-section__grid {
   display: grid;
@@ -294,14 +376,20 @@ function closeFullscreen() {
 }
 
 .portfolio-item {
+  position: relative;
   background: var(--button-background);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   padding: 10px;
   text-align: center;
-  position: relative;
   transition: background 0.3s;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
+
 .portfolio-item:hover {
   background: var(--button-hover-background, rgba(255, 255, 255, 0.2));
 }
@@ -325,29 +413,47 @@ function closeFullscreen() {
   opacity: 1;
 }
 
+/* Медиа */
 .portfolio-item__media {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
   display: block;
-  margin: 30px auto 10px;
+  border-radius: 4px;
+  margin-top: 30px;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* img/gif/video => 200px */
+.portfolio-item__media:not(.portfolio-item__media--iframe-card) {
+  max-height: 200px;
+}
+
+/* iframe => 400px */
+.portfolio-item__media--iframe-card {
+  border: none;
+  overflow: hidden;
+  margin: 0 auto;
+  /* scrolling: no; */
+  width: 100%;
+  height: 400px;
 }
 
 .portfolio-item__caption {
-  margin: 0;
+  margin: 10px 0 0 0;
   font-size: 14px;
   color: var(--text-color);
 }
 
-/* Фуллскрин оверлей */
+/* --- Фуллскрин --- */
 .fullscreen-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
   z-index: 999;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 .fullscreen-overlay__close {
   position: absolute;
@@ -358,11 +464,32 @@ function closeFullscreen() {
   color: #fff;
   font-size: 28px;
   cursor: pointer;
+  z-index: 9999; /* чтобы крестик был выше видео */
 }
-.fullscreen-overlay__content img,
-.fullscreen-overlay__content video {
+
+.fullscreen-overlay__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Общее (для изображений/видео) */
+.fullscreen-media {
+  border: none;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
   max-width: 90%;
-  max-height: 90vh;
-  border-radius: 4px;
+  max-height: 90%;
+}
+
+/* Только для iframe (скетч), делаем на весь экран */
+.fullscreen-media--cover {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
 }
 </style>
