@@ -320,23 +320,23 @@ const developerMedia = [
 
 // Дополнительные проекты
 const developerAdditionalMedia = [
-  {
-    type: "image",
-    src: new URL("@/assets/developer/additional_project1.jpg", import.meta.url),
-    alt: "Additional Project 1",
-    caption: "Description for additional project 1",
-    link: "https://example.com/additional-project1",
-  },
-  {
-    type: "video",
-    src: new URL("@/assets/developer/additional_project2.mp4", import.meta.url),
-    alt: "Additional Project 2",
-    caption: "Description for additional project 2",
-    link: "https://example.com/additional-project2",
-  },
+  // {
+  //   type: "image",
+  //   src: new URL("@/assets/developer/additional_project1.jpg", import.meta.url),
+  //   alt: "Additional Project 1",
+  //   caption: "Description for additional project 1",
+  //   link: "https://example.com/additional-project1",
+  // },
+  // {
+  //   type: "video",
+  //   src: new URL("@/assets/developer/additional_project2.mp4", import.meta.url),
+  //   alt: "Additional Project 2",
+  //   caption: "Description for additional project 2",
+  //   link: "https://example.com/additional-project2",
+  // },
   {
     type: "gif",
-    src: new URL("@/assets/developer/additional_project3.gif", import.meta.url),
+    src: new URL("@/assets/developer/flower of particles.gif", import.meta.url),
     alt: "Additional Project 3",
     caption: "Description for additional project 3",
     link: "https://example.com/additional-project3",

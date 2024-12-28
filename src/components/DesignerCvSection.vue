@@ -319,27 +319,27 @@ const motionMedia = [
 
 // UX/UI дизайн проекты
 const designerMedia = [
-  {
-    type: "image",
-    src: new URL("@/assets/designer/design_1.jpg", import.meta.url),
-    alt: "Mobile App UI/UX design",
-    caption: "UI for a mobile app",
-    link: "https://example.com/designer-mobile-app",
-  },
+  // {
+  //   type: "image",
+  //   src: new URL("@/assets/designer/design_1.jpg", import.meta.url),
+  //   alt: "Mobile App UI/UX design",
+  //   caption: "UI for a mobile app",
+  //   link: "https://example.com/designer-mobile-app",
+  // },
   {
     type: "gif",
-    src: new URL("@/assets/designer/design_2.gif", import.meta.url),
+    src: new URL("@/assets/designer/ars-poetica.gif", import.meta.url),
     alt: "Animated wireframe",
     caption: "Wireframe animation in Figma",
-    link: "https://example.com/designer-wireframe",
+    link: "https://ars-poetica.vercel.app/",
   },
-  {
-    type: "video",
-    src: new URL("@/assets/designer/design_3.mp4", import.meta.url),
-    alt: "Short design reel",
-    caption: "Short portfolio reel",
-    link: "https://example.com/designer-reel",
-  },
+  // {
+  //   type: "video",
+  //   src: new URL("@/assets/designer/ars-poetica.mp4", import.meta.url),
+  //   alt: "Short design reel",
+  //   caption: "Short portfolio reel",
+  //   link: "https://ars-poetica.vercel.app/",
+  // },
 ];
 
 // Функция для получения URL превью YouTube-видео
