@@ -8,21 +8,35 @@
       <CVToggleButtons v-model:activeCV="activeCV" />
     </div>
 
-    <img class="cv-page__face-image" :src="myFaceSrc" alt="Photo" />
+    <!-- Использование директивы v-lazy вместо :src и loading="lazy" -->
+    <img class="cv-page__face-image" v-lazy="myFaceSrc" alt="Photo" />
 
     <div class="cv-page__content">
-      <component :is="currentSectionComponent" />
+      <Suspense>
+        <template #default>
+          <component :is="currentSectionComponent" />
+        </template>
+        <template #fallback>
+          <div class="loading">Загрузка...</div>
+        </template>
+      </Suspense>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import CVToggleButtons from "@/components/CVToggleButtons.vue";
-import DesignerCvSection from "@/components/DesignerCvSection.vue";
-import DeveloperCvSection from "@/components/DeveloperCvSection.vue";
+
+// Динамический импорт компонентов с ленивой загрузкой
+const DesignerCvSection = defineAsyncComponent(() =>
+  import("@/components/DesignerCvSection.vue")
+);
+const DeveloperCvSection = defineAsyncComponent(() =>
+  import("@/components/DeveloperCvSection.vue")
+);
 
 const { t } = useI18n();
 
@@ -46,11 +60,8 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* Цвета для CV: зависят от :root / body.night-theme */
   background-color: var(--cv-background);
   color: var(--cv-text-color);
-
   padding: 20px;
 }
 
@@ -84,5 +95,11 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
   width: 100%;
   max-width: 960px;
   padding: 0 10px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: var(--cv-text-color);
 }
 </style>

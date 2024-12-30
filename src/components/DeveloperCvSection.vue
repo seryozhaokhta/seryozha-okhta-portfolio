@@ -1,5 +1,4 @@
 <!-- src/components/DeveloperCvSection.vue -->
-
 <template>
   <section class="developer-cv-section">
     <!-- Заголовок / описание -->
@@ -81,8 +80,7 @@
             v-for="(item, idx) in developerMedia"
             :key="idx"
             class="portfolio-item"
-            @mouseover="setHovered(idx)"
-            @mouseleave="unsetHovered"
+            @click="openFullscreen(item)"
           >
             <div class="portfolio-item__actions">
               <a
@@ -110,7 +108,7 @@
               </a>
               <button
                 class="portfolio-item__action-btn"
-                @click="openFullscreen(item)"
+                @click.stop="openFullscreen(item)"
               >
                 <!-- Иконка "fullscreen" -->
                 <svg
@@ -130,17 +128,17 @@
             <!-- Медиа: image/gif/video -->
             <img
               v-if="item.type === 'image'"
-              :src="item.src"
+              v-lazy="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
             />
             <img
               v-else-if="item.type === 'gif'"
-              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              v-lazy="hoveredIndex === idx ? item.src : item.placeholderSrc"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
+              @mouseover="setHovered(idx)"
+              @mouseleave="unsetHovered"
             />
             <video
               v-else-if="item.type === 'video'"
@@ -149,6 +147,7 @@
               muted
               playsinline
               preload="metadata"
+              @mouseenter="loadVideo($event)"
             >
               <source :src="item.src" type="video/mp4" />
               Your browser does not support the video tag.
@@ -175,8 +174,7 @@
             v-for="(item, idx) in developerAdditionalMedia"
             :key="idx"
             class="portfolio-item"
-            @mouseover="setHovered(idx)"
-            @mouseleave="unsetHovered"
+            @click="openFullscreen(item)"
           >
             <div class="portfolio-item__actions">
               <a
@@ -204,7 +202,7 @@
               </a>
               <button
                 class="portfolio-item__action-btn"
-                @click="openFullscreen(item)"
+                @click.stop="openFullscreen(item)"
               >
                 <!-- Иконка "fullscreen" -->
                 <svg
@@ -224,17 +222,17 @@
             <!-- Медиа: image/gif/video -->
             <img
               v-if="item.type === 'image'"
-              :src="item.src"
+              v-lazy="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
             />
             <img
               v-else-if="item.type === 'gif'"
-              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              v-lazy="hoveredIndex === idx ? item.src : item.placeholderSrc"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
+              @mouseover="setHovered(idx)"
+              @mouseleave="unsetHovered"
             />
             <video
               v-else-if="item.type === 'video'"
@@ -243,6 +241,7 @@
               muted
               playsinline
               preload="metadata"
+              @mouseenter="loadVideo($event)"
             >
               <source :src="item.src" type="video/mp4" />
               Your browser does not support the video tag.
@@ -258,53 +257,11 @@
     </div>
 
     <!-- Фуллскрин оверлей -->
-    <div
+    <FullscreenOverlay
       v-if="fullscreenItem"
-      class="fullscreen-overlay"
-      @click.self="closeFullscreen"
-    >
-      <!-- Кнопка Закрыть -->
-      <button class="fullscreen-overlay__close" @click="closeFullscreen">
-        ✕
-      </button>
-
-      <div class="fullscreen-overlay__content">
-        <!-- YouTube-видео -->
-        <div
-          v-if="fullscreenItem.type === 'youtube'"
-          class="fullscreen-media fullscreen-media--youtube"
-        >
-          <iframe
-            :src="fullscreenItem.src"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-
-        <!-- Изображение/gif/video -->
-        <img
-          v-else-if="
-            fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
-          "
-          :src="fullscreenItem.src"
-          :alt="fullscreenItem.alt"
-          class="fullscreen-media"
-        />
-        <video
-          v-else-if="fullscreenItem.type === 'video'"
-          class="fullscreen-media"
-          controls
-          autoplay
-          muted
-          playsinline
-          preload="metadata"
-        >
-          <source :src="fullscreenItem.src" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
+      :item="fullscreenItem"
+      @close="closeFullscreen"
+    />
   </section>
 </template>
 
@@ -313,6 +270,7 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import cvEn from "@/locales/cv_en.json";
 import cvRu from "@/locales/cv_ru.json";
+import FullscreenOverlay from "@/components/FullscreenOverlay.vue";
 
 // Локализация
 const { locale, t } = useI18n();
@@ -340,12 +298,11 @@ const developerMedia = [
     alt: "Video snippet of coding session",
     caption: "Short snippet of coding session",
     link: "https://greenhouse-react.vercel.app/",
-    preload: "metadata", // Добавлено для оптимизации
   },
   {
     type: "image",
     src: new URL("@/assets/developer/The Knight.jpg", import.meta.url),
-    alt: "Node.js Web App screenshot",
+    alt: "The Knight Project screenshot",
     caption: "Interactive web app with Node.js",
     link: "https://the-knight-in-the-panther-s-skin.vercel.app/",
   },
@@ -358,7 +315,7 @@ const developerMedia = [
     placeholderSrc: new URL(
       "@/assets/developer/enheduanna-placeholder.jpg",
       import.meta.url
-    ), // Placeholder изображение
+    ),
   },
 ];
 
@@ -367,13 +324,13 @@ const developerAdditionalMedia = [
   {
     type: "gif",
     src: new URL("@/assets/developer/flower of particles.gif", import.meta.url),
-    alt: "Additional Project 3",
+    alt: "Flower of Particles Project",
     caption: "Description for additional project 3",
     link: "https://openprocessing.org/sketch/1950042",
     placeholderSrc: new URL(
       "@/assets/developer/flower-of-particles-placeholder.jpg",
       import.meta.url
-    ), // Placeholder изображение
+    ),
   },
 ];
 
@@ -395,6 +352,15 @@ function openFullscreen(item) {
 }
 function closeFullscreen() {
   fullscreenItem.value = null;
+}
+
+// Функция для ленивой загрузки видео
+function loadVideo(event) {
+  const video = event.target;
+  if (!video.dataset.loaded) {
+    video.load();
+    video.dataset.loaded = true;
+  }
 }
 </script>
 
@@ -443,6 +409,7 @@ function closeFullscreen() {
 .developer-cv-section__portfolio {
   margin-top: 40px;
 }
+
 .developer-cv-section__portfolio-title {
   font-size: 20px;
   margin-bottom: 16px;

@@ -1,5 +1,4 @@
 <!-- src/components/DesignerCvSection.vue -->
-
 <template>
   <section class="designer-cv-section">
     <!-- Заголовок / описание -->
@@ -119,11 +118,11 @@
               v-if="item.type === 'youtube'"
               class="portfolio-item__media portfolio-item__media--youtube"
             >
+              <!-- Использование v-lazy для изображения -->
               <img
-                :src="item.placeholderSrc"
+                v-lazy="item.placeholderSrc"
                 :alt="item.alt"
                 class="portfolio-item__youtube-thumbnail"
-                loading="lazy"
               />
               <div class="play-button-overlay">
                 <svg
@@ -142,17 +141,15 @@
             <!-- Медиа: image/gif/video -->
             <img
               v-else-if="item.type === 'image'"
-              :src="item.src"
+              v-lazy="item.src"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
             />
             <img
               v-else-if="item.type === 'gif'"
-              :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              v-lazy="hoveredIndex === idx ? item.src : item.placeholderSrc"
               :alt="item.alt"
               class="portfolio-item__media"
-              loading="lazy"
               @mouseover="setHovered(idx)"
               @mouseleave="unsetHovered"
             />
@@ -163,6 +160,7 @@
               muted
               playsinline
               preload="metadata"
+              @mouseenter="loadVideo($event)"
             >
               <source :src="item.src" type="video/mp4" />
               Your browser does not support the video tag.
@@ -174,149 +172,104 @@
             </p>
           </div>
         </div>
+      </div>
 
-        <!-- ==== Категория 2: UX/UI дизайн ==== -->
-        <div class="designer-cv-section__portfolio-category">
-          <h4>{{ $t("cv.designerPortfolioUxuiTitle") }}</h4>
-          <div class="designer-cv-section__grid">
-            <div
-              v-for="(item, idx) in designerMedia"
-              :key="idx"
-              class="portfolio-item"
+      <!-- ==== Категория 2: UX/UI дизайн ==== -->
+      <div class="designer-cv-section__portfolio-category">
+        <h4>{{ $t("cv.designerPortfolioUxuiTitle") }}</h4>
+        <div class="designer-cv-section__grid">
+          <div
+            v-for="(item, idx) in designerMedia"
+            :key="idx"
+            class="portfolio-item"
+            @click="openFullscreen(item)"
+          >
+            <div class="portfolio-item__actions">
+              <a
+                v-if="item.link"
+                :href="item.link"
+                target="_blank"
+                rel="noopener"
+                class="portfolio-item__action-btn"
+              >
+                <!-- Иконка-ссылка -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
+                  />
+                  <path
+                    d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
+                  />
+                </svg>
+              </a>
+              <button
+                class="portfolio-item__action-btn"
+                @click.stop="openFullscreen(item)"
+              >
+                <!-- Иконка "fullscreen" -->
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Медиа: image/gif/video -->
+            <img
+              v-if="item.type === 'image'"
+              v-lazy="item.src"
+              :alt="item.alt"
+              class="portfolio-item__media"
+            />
+            <img
+              v-else-if="item.type === 'gif'"
+              v-lazy="hoveredIndex === idx ? item.src : item.placeholderSrc"
+              :alt="item.alt"
+              class="portfolio-item__media"
               @mouseover="setHovered(idx)"
               @mouseleave="unsetHovered"
+            />
+            <video
+              v-else-if="item.type === 'video'"
+              class="portfolio-item__media"
+              controls
+              muted
+              playsinline
+              preload="metadata"
+              @mouseenter="loadVideo($event)"
             >
-              <div class="portfolio-item__actions">
-                <a
-                  v-if="item.link"
-                  :href="item.link"
-                  target="_blank"
-                  rel="noopener"
-                  class="portfolio-item__action-btn"
-                >
-                  <!-- Иконка-ссылка -->
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14 3L19.99 3C20.54 3 21 3.45 21 4V10C21 10.55 20.54 11 19.99 11C19.44 11 19 10.55 19 10V6.41L12.04 13.37C11.65 13.76 11.02 13.76 10.63 13.37C10.24 12.98 10.24 12.35 10.63 11.96L17.59 5H14C13.45 5 13 4.55 13 4C13 3.45 13.45 3 14 3Z"
-                    />
-                    <path
-                      d="M5 21C4.45 21 4 20.55 4 20V7C4 6.45 4.45 6 5 6C5.55 6 6 6.45 6 7V20H17C17.55 20 18 20.45 18 21C18 21.55 17.55 22 17 22H5Z"
-                    />
-                  </svg>
-                </a>
-                <button
-                  class="portfolio-item__action-btn"
-                  @click.stop="openFullscreen(item)"
-                >
-                  <!-- Иконка "fullscreen" -->
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3 3H10V5H5V10H3V3ZM14 3H21V10H19V5H14V3ZM19 14H21V21H14V19H19V14ZM5 19H10V21H3V14H5V19Z"
-                    />
-                  </svg>
-                </button>
-              </div>
+              <source :src="item.src" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-              <!-- Медиа: image/gif/video -->
-              <img
-                v-if="item.type === 'image'"
-                :src="item.src"
-                :alt="item.alt"
-                class="portfolio-item__media"
-                loading="lazy"
-              />
-              <img
-                v-else-if="item.type === 'gif'"
-                :src="hoveredIndex === idx ? item.src : item.placeholderSrc"
-                :alt="item.alt"
-                class="portfolio-item__media"
-                loading="lazy"
-                @mouseover="setHovered(idx)"
-                @mouseleave="unsetHovered"
-              />
-              <video
-                v-else-if="item.type === 'video'"
-                class="portfolio-item__media"
-                controls
-                muted
-                playsinline
-                preload="metadata"
-              >
-                <source :src="item.src" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-
-              <!-- Подпись -->
-              <p class="portfolio-item__caption" v-if="item.caption">
-                {{ item.caption }}
-              </p>
-            </div>
+            <!-- Подпись -->
+            <p class="portfolio-item__caption" v-if="item.caption">
+              {{ item.caption }}
+            </p>
           </div>
-        </div>
-      </div>
-      <!-- Закрытие .portfolio-category -->
-
-      <!-- Фуллскрин оверлей -->
-      <div
-        v-if="fullscreenItem"
-        class="fullscreen-overlay"
-        @click.self="closeFullscreen"
-      >
-        <!-- Кнопка Закрыть -->
-        <button class="fullscreen-overlay__close" @click="closeFullscreen">
-          ✕
-        </button>
-
-        <div class="fullscreen-overlay__content">
-          <!-- YouTube-видео -->
-          <div
-            v-if="fullscreenItem.type === 'youtube'"
-            class="fullscreen-media fullscreen-media--youtube"
-          >
-            <iframe
-              :src="fullscreenItem.src"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-
-          <!-- Изображение/gif/video -->
-          <img
-            v-else-if="
-              fullscreenItem.type === 'image' || fullscreenItem.type === 'gif'
-            "
-            :src="fullscreenItem.src"
-            :alt="fullscreenItem.alt"
-            class="fullscreen-media"
-          />
-          <video
-            v-else-if="fullscreenItem.type === 'video'"
-            class="fullscreen-media"
-            controls
-            autoplay
-            muted
-            playsinline
-            preload="metadata"
-          >
-            <source :src="fullscreenItem.src" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
         </div>
       </div>
     </div>
+
+    <!-- Фуллскрин оверлей -->
+    <FullscreenOverlay
+      v-if="fullscreenItem"
+      :item="fullscreenItem"
+      @close="closeFullscreen"
+    />
   </section>
 </template>
 
@@ -325,6 +278,7 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import cvEn from "@/locales/cv_en.json";
 import cvRu from "@/locales/cv_ru.json";
+import FullscreenOverlay from "@/components/FullscreenOverlay.vue";
 
 // Локализация
 const { locale, t } = useI18n();
@@ -358,19 +312,7 @@ const designerMedia = [
       "@/assets/designer/ars-poetica-placeholder.jpg",
       import.meta.url
     ),
-  }, // {
-  //   type: "image",
-  //   src: new URL("@/assets/designer/design_1.jpg", import.meta.url),
-  //   alt: "Mobile App UI/UX design",
-  //   caption: "UI for a mobile app",
-  //   link: "https://example.com/designer-mobile-app",
-  // },  // {
-  //   type: "video",
-  //   src: new URL("@/assets/designer/ars-poetica.mp4", import.meta.url),
-  //   alt: "Short design reel",
-  //   caption: "Short portfolio reel",
-  //   link: "https://ars-poetica.vercel.app/",
-  // },
+  },
 ];
 
 // Состояние для отслеживания наведения
@@ -391,6 +333,15 @@ function openFullscreen(item) {
 }
 function closeFullscreen() {
   fullscreenItem.value = null;
+}
+
+// Функция для ленивой загрузки видео
+function loadVideo(event) {
+  const video = event.target;
+  if (!video.dataset.loaded) {
+    video.load();
+    video.dataset.loaded = true;
+  }
 }
 </script>
 
