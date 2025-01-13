@@ -150,4 +150,42 @@ onMounted(() => {
   filter: blur(4px);
   transition: opacity 0.5s, filter 0.5s;
 }
+
+@media (max-width: 768px) {
+  .shader-title {
+    padding: 10px 20px;
+  }
+
+  .shader-title h1 {
+    font-size: 24px;
+  }
+
+  .shader-title__intro-name {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .shader-title__intro-description {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shader-title {
+    padding: 8px 16px;
+  }
+
+  .shader-title h1 {
+    font-size: 20px;
+  }
+
+  .shader-title__intro-name {
+    font-size: 1.2rem;
+  }
+
+  .shader-title__intro-description {
+    font-size: 14px;
+  }
+}
 </style>

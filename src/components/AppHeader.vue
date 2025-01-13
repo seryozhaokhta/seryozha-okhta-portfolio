@@ -52,4 +52,31 @@ import CVButton from "./CVButton.vue";
   gap: 10px;
   margin-left: auto;
 }
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+  .app-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .app-header__left-section {
+    flex: 0 0 auto;
+  }
+
+  .app-header__title {
+    display: none;
+  }
+
+  .app-header__controls {
+    flex: 1;
+    justify-content: space-evenly;
+  }
+
+  .app-header__controls > * {
+    flex: 0 0 auto;
+    text-align: center;
+  }
+}
 </style>
