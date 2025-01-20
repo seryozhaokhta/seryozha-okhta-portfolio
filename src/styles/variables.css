@@ -1,5 +1,3 @@
-/* src/styles/variables.css */
-
 /* 
    ====== DAY (по умолчанию) ======
    :root -> фон белый, текст чёрный 
@@ -35,12 +33,12 @@
   /* CV (днём) */
   --cv-background: #f0f0f0;
   --cv-text-color: #000000;
+
+  /* Слайдер и кнопки переключения CV */
+  --toggle-background: #f0f0f0;
+  --slider-color: #007bff;
 }
 
-/* 
-   ====== NIGHT (.night-theme) ======
-   -> фон чёрный, текст белый
-*/
 body.night-theme {
   --background-color: #000000;
   --text-color: #ffffff;
@@ -68,4 +66,8 @@ body.night-theme {
   /* CV (ночью) */
   --cv-background: #1a1a1a;
   --cv-text-color: #ffffff;
+
+  /* Слайдер и кнопки переключения CV */
+  --toggle-background: #333333;
+  --slider-color: #ff6600;
 }

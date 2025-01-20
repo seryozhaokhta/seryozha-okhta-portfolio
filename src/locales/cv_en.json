@@ -1,10 +1,31 @@
 {
   "designer": {
-    "title": "Curriculum Vitae - Designer",
+    "downloadResumeButtonTitle": "Save resume (PDF)",
     "description": "As a designer, I specialize in creating intuitive interfaces and engaging user experiences.",
     "skills": {
       "title": "Skills",
-      "tools": ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Sketch"],
+      "tools": {
+        "typography": {
+          "title": "Typography",
+          "tools": ["Adobe Photoshop", "Adobe Illustrator", "Figma"]
+        },
+        "3D": {
+          "title": "3D",
+          "tools": [
+            "Cinema 4D (OCTANE render)",
+            "Adobe Substance Designer",
+            "Substance Painter"
+          ]
+        },
+        "animation": {
+          "title": "Animation",
+          "tools": ["TouchDesigner", "After Effects", "Cavalry"]
+        },
+        "sound": {
+          "title": "Sound",
+          "tools": ["Ableton 12"]
+        }
+      },
       "designPrinciples": [
         "User-Centered Design",
         "Responsive Design",
@@ -16,10 +37,22 @@
     "experienceTitle": "Experience",
     "experience": [
       {
-        "company": "",
-        "role": "UI/UX Designer",
-        "years": "2018-2020",
-        "description": "Designed responsive interfaces, conducted user research, and improved user flows."
+        "company": "Level One",
+        "role": "Designer",
+        "years": "2017 — 2019",
+        "description": "Developed responsive interfaces for an educational platform, conducted user testing, and optimized designs for student convenience."
+      },
+      {
+        "company": "Synchronization",
+        "role": "Designer",
+        "years": "2019 — 2020",
+        "description": "Designed interfaces for web courses, created interactive elements and visual scenarios to enhance user engagement."
+      },
+      {
+        "company": "Arzamas",
+        "role": "Designer",
+        "years": "2020 – 2023",
+        "description": "Contributed to the development of interfaces for educational projects, improved the mobile user experience, and created visual concepts for special projects."
       },
       {
         "company": "Freelance Projects",
@@ -27,10 +60,19 @@
         "years": "2020-Present",
         "description": "Created branding materials, visual identities, and marketing collateral for clients."
       }
+    ],
+    "educationTitle": "Education",
+    "education": [
+      {
+        "institution": "Saint Petersburg Stieglitz State Academy of Art and Design",
+        "degree": "Bachelor of Art History",
+        "years": "2014-2018",
+        "description": "Studied art history, composition theory, cultural epochs, and artistic styles. Conducted in-depth research on art from various periods and regions, as well as the intersection of art and technology."
+      }
     ]
   },
   "developer": {
-    "title": "Curriculum Vitae - Developer",
+    "downloadResumeButtonTitle": "Download Developer Resume",
     "description": "As a developer, I specialize in front-end technologies and creating interactive web applications.",
     "skills": {
       "title": "Skills",
@@ -41,16 +83,23 @@
     "experienceTitle": "Experience",
     "experience": [
       {
-        "company": "Tech Start-Up ABC",
-        "role": "Front-End Developer",
-        "years": "2017-2019",
-        "description": "Implemented complex UI components, improved application performance, and integrated RESTful APIs."
+        "company": "Smart Greenhouses",
+        "role": "Frontend Developer",
+        "years": "2022 – 2024",
+        "description": "Developed complex interfaces for managing smart greenhouses, optimized application performance, and integrated RESTful APIs to support IoT devices."
       },
+      {
+        "company": "Gabriel Store",
+        "role": "Full-Stack Developer",
+        "years": "2020 – 2022",
+        "description": "Developed and maintained full-stack solutions for a women's lingerie store, implementing features using Vue 3, Pinia, and Cloudinary."
+      },
+
       {
         "company": "Freelance",
         "role": "Full-Stack Developer",
-        "years": "2019-Present",
-        "description": "Developed custom web solutions, integrated 3D interactive graphics, and maintained scalable codebases."
+        "years": "2022 – 2024",
+        "description": "Created custom web solutions, including 3D graphics integration, responsive interfaces, and scalable project support."
       }
     ]
   },

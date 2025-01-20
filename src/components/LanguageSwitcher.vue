@@ -34,4 +34,18 @@ button:hover {
   background-color: var(--button-hover-background, rgba(0, 0, 0, 0.2));
   color: var(--button-hover-text-color, #ffffff);
 }
+
+@media screen and (max-width: 768px) {
+  div {
+    display: flex;
+    gap: 5px; /* Расстояние между кнопками */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    padding: 3px 8px; /* Уменьшаем кнопки */
+    font-size: 12px; /* Делаем шрифт меньше */
+  }
+}
 </style>

@@ -1,10 +1,10 @@
 <!-- src/views/CVPage.vue -->
 <template>
-  <div class="cv-page">
+  <div id="cv-page" class="cv-page">
     <div class="cv-page__header">
-      <h1 class="cv-page__title">
+      <!-- <h1 class="cv-page__title">
         {{ $t(`cv.cvPage.title.${activeCV}`) }}
-      </h1>
+      </h1> -->
       <CVToggleButtons v-model:activeCV="activeCV" />
     </div>
 
@@ -41,7 +41,7 @@ const DeveloperCvSection = defineAsyncComponent(() =>
 const { t } = useI18n();
 
 // Переключение "designer"/"developer"
-const activeCV = ref(localStorage.getItem("activeCV") || "designer");
+const activeCV = ref(localStorage.getItem("activeCV") || "developer");
 watch(activeCV, (newVal) => {
   localStorage.setItem("activeCV", newVal);
 });
@@ -56,13 +56,8 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
 
 <style scoped>
 .cv-page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: var(--cv-background);
   color: var(--cv-text-color);
-  padding: 20px;
 }
 
 .cv-page__header {
@@ -72,11 +67,13 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
+  padding: 10px;
 }
 
 .cv-page__title {
-  font-size: 28px;
+  font-size: 16px;
   margin: 0;
+  /* display: none; */
 }
 
 .cv-page__face-image {
@@ -87,6 +84,7 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
   border: 2px solid var(--cv-text-color);
   transition: border-color 0.3s;
 }
+
 .cv-page__face-image:hover {
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -101,5 +99,11 @@ const myFaceSrc = new URL("@/assets/ansiktet mitt.jpg", import.meta.url);
   text-align: center;
   font-size: 18px;
   color: var(--cv-text-color);
+}
+
+@media (max-width: 480px) {
+  .cv-page__face-image {
+    max-width: 150px;
+  }
 }
 </style>

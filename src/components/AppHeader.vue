@@ -70,13 +70,14 @@ import CVButton from "./CVButton.vue";
   }
 
   .app-header__controls {
-    flex: 1;
+    display: flex;
+    gap: 5px;
     justify-content: space-evenly;
+    flex: 1;
   }
 
   .app-header__controls > * {
     flex: 0 0 auto;
-    text-align: center;
   }
 }
 </style>

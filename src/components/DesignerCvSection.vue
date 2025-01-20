@@ -1,8 +1,14 @@
 <!-- src/components/DesignerCvSection.vue -->
+
 <template>
   <section class="designer-cv-section">
     <!-- Заголовок / описание -->
-    <h2 class="designer-cv-section__title">{{ $t("cv.designer.title") }}</h2>
+    <!-- <h2 class="designer-cv-section__title">{{ $t("cv.designer.title") }}</h2> -->
+    <DownloadResumeButton
+      :buttonTitle="$t('cv.designer.downloadResumeButtonTitle')"
+      :resumeLink="designerData.resumeLink"
+    />
+
     <p class="designer-cv-section__description">
       {{ $t("cv.designer.description") }}
     </p>
@@ -15,8 +21,18 @@
       <div class="designer-cv-section__skills-category">
         <strong>{{ $t("cv.skillsLabels.tools") }}</strong>
         <ul>
-          <li v-for="tool in designerData.skills.tools" :key="tool">
-            {{ tool }}
+          <li
+            v-for="(toolsCategory, category) in designerData.skills.tools"
+            :key="category"
+          >
+            <strong
+              >{{ $t(`cv.designer.skills.tools.${category}.title`) }}:</strong
+            >
+            <ul>
+              <li v-for="tool in toolsCategory.tools" :key="tool">
+                {{ tool }}
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -45,7 +61,7 @@
       >
         <h4>
           {{ job.role }}
-          <template v-if="job.company"> at {{ job.company }}</template>
+          <template v-if="job.company"> {{ job.company }}</template>
         </h4>
         <span class="designer-cv-section__job-years">{{ job.years }}</span>
         <p class="designer-cv-section__job-description">
@@ -53,6 +69,24 @@
         </p>
       </div>
     </div>
+
+    <!-- Секция образования -->
+    <!-- <div
+      v-if="designerData.education && designerData.education.length"
+      class="cv-education"
+    >
+      <h3>{{ designerData.educationTitle }}</h3>
+      <div
+        class="cv-education__item"
+        v-for="(edu, index) in designerData.education"
+        :key="index"
+      >
+        <h4>{{ edu.institution }}</h4>
+        <span class="cv-education__degree">{{ edu.degree }}</span>
+        <span class="cv-education__years">{{ edu.years }}</span>
+        <p class="cv-education__description">{{ edu.description }}</p>
+      </div>
+    </div> -->
 
     <!-- Портфолио -->
     <div class="designer-cv-section__portfolio">
@@ -279,6 +313,7 @@ import { useI18n } from "vue-i18n";
 import cvEn from "@/locales/cv_en.json";
 import cvRu from "@/locales/cv_ru.json";
 import FullscreenOverlay from "@/components/FullscreenOverlay.vue";
+import DownloadResumeButton from "./DownloadResumeButton.vue";
 
 // Локализация
 const { locale, t } = useI18n();
@@ -294,7 +329,8 @@ const motionMedia = [
     type: "youtube",
     src: "https://www.youtube.com/embed/UydIPVDlZIY",
     alt: "Motion Design Demo",
-    caption: "A short motion design reel",
+    caption:
+      "Educational video about the history of Sumer with animation and motion design.",
     link: "https://www.youtube.com/watch?v=UydIPVDlZIY",
     placeholderSrc: "https://img.youtube.com/vi/UydIPVDlZIY/hqdefault.jpg", // Placeholder изображение
   },
@@ -306,7 +342,8 @@ const designerMedia = [
     type: "gif",
     src: new URL("@/assets/designer/ars-poetica.gif", import.meta.url),
     alt: "Animated wireframe",
-    caption: "Wireframe animation in Figma",
+    caption:
+      "An interactive poem by Thor Ulven with visual effects and animation.",
     link: "https://ars-poetica.vercel.app/",
     placeholderSrc: new URL(
       "@/assets/designer/ars-poetica-placeholder.jpg",

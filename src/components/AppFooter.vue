@@ -155,4 +155,20 @@ const copyToClipboard = (email) => {
   height: 24px;
   /* fill="currentColor" уже задано в svg, достаточно наследовать color */
 }
+
+@media (max-width: 768px) {
+  .app-footer {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .app-footer__social-link {
+    margin: 10px 0;
+  }
+
+  .app-footer__social-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
 </style>

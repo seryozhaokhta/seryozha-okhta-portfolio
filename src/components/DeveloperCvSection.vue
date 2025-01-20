@@ -2,7 +2,12 @@
 <template>
   <section class="developer-cv-section">
     <!-- Заголовок / описание -->
-    <h2 class="developer-cv-section__title">{{ $t("cv.developer.title") }}</h2>
+    <!-- <h2 class="developer-cv-section__title">{{ $t("cv.developer.title") }}</h2> -->
+    <DownloadResumeButton
+      :buttonTitle="$t('cv.developer.downloadResumeButtonTitle')"
+      :resumeLink="developerData.resumeLink"
+    />
+
     <p class="developer-cv-section__description">
       {{ $t("cv.developer.description") }}
     </p>
@@ -55,7 +60,7 @@
       >
         <h4>
           {{ job.role }}
-          <template v-if="job.company"> at {{ job.company }}</template>
+          <template v-if="job.company"> {{ job.company }}</template>
         </h4>
         <span class="developer-cv-section__job-years">{{ job.years }}</span>
         <p class="developer-cv-section__job-description">
@@ -271,6 +276,7 @@ import { useI18n } from "vue-i18n";
 import cvEn from "@/locales/cv_en.json";
 import cvRu from "@/locales/cv_ru.json";
 import FullscreenOverlay from "@/components/FullscreenOverlay.vue";
+import DownloadResumeButton from "./DownloadResumeButton.vue";
 
 // Локализация
 const { locale, t } = useI18n();
@@ -288,29 +294,33 @@ const developerMedia = [
       "@/assets/developer/tor_ulven__stein-og-speil.png",
       import.meta.url
     ),
-    alt: "Node.js Web App screenshot",
-    caption: "Interactive web app with Node.js",
+    alt: "Tor Ulven's Stein og Speil web app screenshot",
+    caption:
+      "An interactive web app dedicated to Tor Ulven's book 'Stein og Speil'.",
     link: "https://tor-ulven-stein-og-speil.vercel.app/",
   },
   {
     type: "video",
     src: new URL("@/assets/developer/Smart-greenhouses.mp4", import.meta.url),
-    alt: "Video snippet of coding session",
-    caption: "Short snippet of coding session",
+    alt: "Video snippet of a coding session",
+    caption:
+      "Snippet of a coding session for a start-up project, Smart Greenhouses.",
     link: "https://greenhouse-react.vercel.app/",
   },
   {
     type: "image",
     src: new URL("@/assets/developer/The Knight.jpg", import.meta.url),
-    alt: "The Knight Project screenshot",
-    caption: "Interactive web app with Node.js",
+    alt: "The Knight in the Panther's Skin web app screenshot",
+    caption:
+      "A website dedicated to the Georgian literary masterpiece 'The Knight in the Panther's Skin'.",
     link: "https://the-knight-in-the-panther-s-skin.vercel.app/",
   },
   {
     type: "gif",
     src: new URL("@/assets/developer/enheduanna.gif", import.meta.url),
-    alt: "3D data visualization with Three.js",
-    caption: "Animated 3D visualization",
+    alt: "3D data visualization of Enheduanna",
+    caption:
+      "A website dedicated to Enheduanna, the first known author in history. Includes interactive 3D visualization.",
     link: "https://enheduanna.vercel.app/",
     placeholderSrc: new URL(
       "@/assets/developer/enheduanna-placeholder.jpg",
@@ -325,7 +335,8 @@ const developerAdditionalMedia = [
     type: "gif",
     src: new URL("@/assets/developer/flower of particles.gif", import.meta.url),
     alt: "Flower of Particles Project",
-    caption: "Description for additional project 3",
+    caption:
+      "A generative art sketch using p5.js. Experimenting with particle systems.",
     link: "https://openprocessing.org/sketch/1950042",
     placeholderSrc: new URL(
       "@/assets/developer/flower-of-particles-placeholder.jpg",

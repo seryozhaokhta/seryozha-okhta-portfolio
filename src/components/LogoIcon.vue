@@ -23,8 +23,13 @@
 .logo-icon {
   width: 40px;
   height: 40px;
-  color: var(
-    --logo-icon-color
-  ); /* Здесь задаём цвет иконки через currentColor */
+  color: var(--logo-icon-color);
+}
+
+@media screen and (max-width: 768px) {
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
 }
 </style>
