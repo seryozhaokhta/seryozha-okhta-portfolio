@@ -117,7 +117,6 @@ onMounted(() => {
   font-size: 18px;
 }
 
-/* Остальные стили (hover, accent) — без изменений */
 .shader-title__name-part {
   display: inline-block;
   position: relative;
@@ -154,6 +153,11 @@ onMounted(() => {
 @media (max-width: 768px) {
   .shader-title {
     padding: 10px 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .shader-title h1 {
@@ -168,24 +172,6 @@ onMounted(() => {
 
   .shader-title__intro-description {
     font-size: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .shader-title {
-    padding: 8px 16px;
-  }
-
-  .shader-title h1 {
-    font-size: 20px;
-  }
-
-  .shader-title__intro-name {
-    font-size: 1.2rem;
-  }
-
-  .shader-title__intro-description {
-    font-size: 14px;
   }
 }
 </style>
