@@ -34,6 +34,9 @@
   --cv-background: #f0f0f0;
   --cv-text-color: #000000;
 
+  /* Цвет для цифр отработанных лет (день) */
+  --job-years-color: #555;
+
   /* Слайдер и кнопки переключения CV */
   --toggle-background: #f0f0f0;
   --slider-color: #007bff;
@@ -66,6 +69,9 @@ body.night-theme {
   /* CV (ночью) */
   --cv-background: #1a1a1a;
   --cv-text-color: #ffffff;
+
+  /* Цвет для цифр отработанных лет (ночь) */
+  --job-years-color: #bbb;
 
   /* Слайдер и кнопки переключения CV */
   --toggle-background: #333333;

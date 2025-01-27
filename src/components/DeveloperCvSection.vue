@@ -404,13 +404,16 @@ function loadVideo(event) {
 .developer-cv-section__experience {
   margin-top: 20px;
 }
+
 .developer-cv-section__job {
   margin-bottom: 15px;
 }
+
 .developer-cv-section__job-years {
   font-size: 0.9em;
-  color: #555;
+  color: var(--job-years-color);
 }
+
 .developer-cv-section__job-description {
   margin: 5px 0 0 0;
   color: var(--text-color);
